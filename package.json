@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "db:migrate": "dotenv -e .env.development -- npx prisma migrate dev",
+    "db:generate": "dotenv -e .env.development -- npx prisma generate",
+    "db:pull": "dotenv -e .env.development -- npx prisma db pull",
+    "db:push": "dotenv -e .env.development -- npx prisma db push"
+  },
   "dependencies": {
     "@prisma/client": "^5.12.0",
     "@trpc/client": "^11.0.0-rc.330",
