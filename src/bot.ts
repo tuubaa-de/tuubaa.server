@@ -19,11 +19,16 @@ export default {
   run,
 };
 
+export const uptime = Date.now();
+
 async function run() {
   client.login(process.env["BOT_TOKEN"]);
+  moduleManager.listenCommands();
   moduleManager.listenError();
   client.once(Events.ClientReady, () => {
-    moduleManager.listenCommands();
     moduleManager.load();
+  });
+  client.on(Events.InteractionCreate, async (interaction) => {
+    console.log(interaction);
   });
 }

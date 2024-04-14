@@ -1,10 +1,10 @@
 // Purpose: Example
 
-import { t } from "../../endpoint";
+import { z } from "zod";
+import { publicProcedure, router } from "../../endpoint";
 import { Module } from "../../types/module";
+import { ping } from "./commands";
 import { registerSlash } from "./events/registerSlash";
-
-const router = t.router({});
 
 async function entry() {
   console.log(">> utils loaded");
@@ -13,9 +13,16 @@ async function entry() {
   registerSlash();
 }
 
+const utilsRouter = router({
+  list: publicProcedure.query(() => {
+    // [..]
+    return [];
+  }),
+});
+
 export const utils = new Module({
   name: "utils",
-  commands: [],
+  commands: [ping],
   entry: entry,
-  router: router,
+  router: utilsRouter,
 });

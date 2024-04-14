@@ -6,8 +6,8 @@ import {
   Routes,
 } from "discord.js";
 import { client } from "../../../bot";
-import { snowflake } from "../../../lib/snowflake/init";
 import { moduleManager } from "../../handler";
+import { snowflake } from "../../../lib/snowflake";
 
 // NOTFALL FÜR SLASH COMMANDS
 export async function registerSlash() {
@@ -39,6 +39,8 @@ export async function registerSlash() {
         `Started refreshing ${commands.length} application (/) commands.`
       );
 
+      console.log(commands);
+
       if (!guildId || !clientId) {
         throw "Guild Id or Client Id is missing in .env";
       }
@@ -48,6 +50,8 @@ export async function registerSlash() {
         Routes.applicationGuildCommands(clientId, guildId),
         { body: commands }
       );
+
+      console.log(data);
 
       console.log(
         `Successfully reloaded ${data.length} application (/) commands.`

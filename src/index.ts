@@ -1,8 +1,13 @@
+import { z } from "zod";
 import bot from "./bot";
-import { publicProcedure, t } from "./endpoint";
+import { publicProcedure, router } from "./endpoint";
+import { snowflakeRouter } from "./lib/snowflake";
+import { moduleManager } from "./module/handler";
+import { utils } from "./module/utils";
 
-const appRouter = t.router({
-  userList: publicProcedure.query(async () => {}),
+const appRouter = router({
+  snowflake: snowflakeRouter,
+  ...moduleManager.getRoutes(),
 });
 
 export type AppRouter = typeof appRouter;

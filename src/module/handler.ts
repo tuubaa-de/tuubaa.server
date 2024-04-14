@@ -1,19 +1,25 @@
 import {
   QueryProcedure,
   Router,
+  RouterRecord,
 } from "@trpc/server/unstable-core-do-not-import";
 import { Commands } from "../types/commands";
-import { t } from "../endpoint";
 // import { utils } from "./utils";
 import { client } from "../bot";
 import { Client, Events } from "discord.js";
-import { snowflake } from "../lib/snowflake/init";
 import { ready } from "./ready";
 import { Module } from "../types/module";
 import { utils } from "./utils";
+import { snowflake } from "../lib/snowflake";
 
 class ModuleManager {
-  modules: { module: Module; enabled: boolean }[];
+  modules: {
+    module: Module<
+      { ctx: any; meta: any; errorShape: any; transformer: any },
+      RouterRecord
+    >;
+    enabled: boolean;
+  }[];
 
   // TODO: implement dynamic modul system via discord
   //   add(module: Module) {
@@ -40,6 +46,10 @@ class ModuleManager {
     }
 
     await snowflake.load();
+  }
+
+  getRoutes() {
+    return routers;
   }
 
   async listenCommands() {
@@ -91,6 +101,11 @@ class ModuleManager {
     );
   }
 }
+
+const routers = {
+  ready: ready.router,
+  utils: utils.router,
+};
 
 export const moduleManager = new ModuleManager({
   // TODO: to dynamic import modules

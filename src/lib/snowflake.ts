@@ -6,9 +6,10 @@ import {
   GuildMember,
   Role,
 } from "discord.js";
-import { client } from "../../bot";
+import { client } from "../bot";
 import { raw } from "@prisma/client/runtime/library";
-import { Database, prisma } from "../database";
+import { Database, prisma } from "./database";
+import { publicProcedure, router } from "../endpoint";
 
 // TODO: need testing
 class Snowflakes<T extends string> {
@@ -84,4 +85,11 @@ export const snowflake = new Snowflakes({
   roles: ["admin", "mod", "user"],
   channels: ["general", "log", "mod", "admin"],
   members: ["tuubaa", "time"],
+});
+
+export const snowflakeRouter = router({
+  getRole: publicProcedure.query(async (opts) => {
+    // [..]
+    return [snowflake.roles];
+  }),
 });

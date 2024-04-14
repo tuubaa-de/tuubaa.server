@@ -1,8 +1,8 @@
 import { client } from "../../bot";
-import { t } from "../../endpoint";
+import { router } from "../../endpoint";
 import { Module } from "../../types/module";
 
-const router = t.router({});
+const readyRouter = router({});
 
 async function entry() {
   console.log(`Client loaded with ${client.user?.tag}`);
@@ -12,5 +12,5 @@ export const ready = new Module({
   name: "ready",
   commands: [],
   entry: entry,
-  router: router,
+  router: readyRouter,
 });
