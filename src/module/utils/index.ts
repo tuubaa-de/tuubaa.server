@@ -13,10 +13,9 @@ async function entry() {
   registerSlash();
 }
 
-const utilsRouter = router({
+export const utilsRouter = router({
   list: publicProcedure.query(() => {
-    // [..]
-    return [];
+    return "test";
   }),
 });
 
@@ -24,5 +23,4 @@ export const utils = new Module({
   name: "utils",
   commands: [ping],
   entry: entry,
-  router: utilsRouter,
 });

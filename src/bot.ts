@@ -12,6 +12,8 @@ export let client = new Client({
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildIntegrations,
+    GatewayIntentBits.GuildVoiceStates,
   ],
 });
 
@@ -27,8 +29,5 @@ async function run() {
   moduleManager.listenError();
   client.once(Events.ClientReady, () => {
     moduleManager.load();
-  });
-  client.on(Events.InteractionCreate, async (interaction) => {
-    console.log(interaction);
   });
 }

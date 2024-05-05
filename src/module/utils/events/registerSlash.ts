@@ -13,8 +13,8 @@ import { snowflake } from "../../../lib/snowflake";
 export async function registerSlash() {
   client.on(Events.MessageCreate, async (message: Message) => {
     if (
-      message.content.startsWith("!!!registerSlash") &&
-      message.author.id === snowflake.members.time?.id
+      !message.content.startsWith("!!!registerSlash") ||
+      message.author.id !== snowflake.members.time?.id
     ) {
       return;
     }
@@ -39,8 +39,6 @@ export async function registerSlash() {
         `Started refreshing ${commands.length} application (/) commands.`
       );
 
-      console.log(commands);
-
       if (!guildId || !clientId) {
         throw "Guild Id or Client Id is missing in .env";
       }
@@ -50,8 +48,6 @@ export async function registerSlash() {
         Routes.applicationGuildCommands(clientId, guildId),
         { body: commands }
       );
-
-      console.log(data);
 
       console.log(
         `Successfully reloaded ${data.length} application (/) commands.`

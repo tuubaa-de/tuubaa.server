@@ -11,23 +11,37 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup",
+    "dev": "concurrently  \"nodemon src/index.ts\"",
+    "build:watch": "tsc-watch --onSuccess \"yalc push\"",
     "db:migrate": "dotenv -e .env.development -- npx prisma migrate dev",
     "db:generate": "dotenv -e .env.development -- npx prisma generate",
     "db:pull": "dotenv -e .env.development -- npx prisma db pull",
     "db:push": "dotenv -e .env.development -- npx prisma db push"
   },
   "dependencies": {
-    "@prisma/client": "^5.12.0",
-    "@trpc/client": "^11.0.0-rc.330",
-    "@trpc/server": "^11.0.0-rc.330",
+    "@discord-player/extractor": "^4.4.7",
+    "@prisma/client": "^5.13.0",
+    "@trpc/client": "^10.45.2",
+    "@trpc/server": "^10.45.2",
+    "axios": "^1.6.8",
+    "canvas": "^2.11.2",
+    "cors": "^2.8.5",
+    "discord-player": "^6.6.8",
     "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
+    "ffmpeg-static": "^5.2.0",
+    "http": "^0.0.1-security",
+    "mediaplex": "^0.0.9",
     "moment": "^2.30.1",
-    "prisma": "^5.12.0",
+    "youtube-ext": "^1.1.25",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.0",
+    "prisma": "^5.13.0",
+    "tsc-watch": "^6.2.0",
     "tsup": "^8.0.2",
     "typescript": "^5.4.5"
   }

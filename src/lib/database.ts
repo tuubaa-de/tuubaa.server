@@ -3,6 +3,16 @@ export const prisma = new PrismaClient();
 
 export class Database {
   static config = {
+    set: async (name: string, id: string) => {
+      await prisma.config.update({
+        where: {
+          name: name,
+        },
+        data: {
+          id: id,
+        },
+      });
+    },
     get: async (name: string) => {
       const result = await prisma.config.findUnique({
         where: {

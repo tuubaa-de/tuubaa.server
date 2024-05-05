@@ -4,36 +4,85 @@ import {
   GuildBasedChannel,
   GuildChannel,
   GuildMember,
+  GuildTextBasedChannel,
   Role,
+  TextBasedChannel,
+  TextChannel,
 } from "discord.js";
 import { client } from "../bot";
-import { raw } from "@prisma/client/runtime/library";
+import { AllModelsToStringIndex, raw } from "@prisma/client/runtime/library";
 import { Database, prisma } from "./database";
 import { publicProcedure, router } from "../endpoint";
+import { z } from "zod";
 
-// TODO: need testing
-class Snowflakes<T extends string> {
-  roles: Record<T, Role | null> = {} as Record<T, Role | null>;
-  channels: Record<T, GuildBasedChannel | null> = {} as Record<
-    T,
-    GuildBasedChannel | null
-  >;
-  members: Record<T, GuildMember | null> = {} as Record<T, GuildMember | null>;
+const Roles = z.object({
+  admin: z.custom<Role>().nullable(),
+  mod: z.custom<Role>().nullable(),
+  user: z.custom<Role>().nullable(),
+});
 
-  private rawRoles: T[];
-  private rawChannels: T[];
-  private rawMembers: T[];
+const Channels = z.object({
+  general: z.custom<GuildTextBasedChannel>().nullable(),
+  bot: z.custom<GuildTextBasedChannel>().nullable(),
+  log: z.custom<GuildTextBasedChannel>().nullable(),
+  mod: z.custom<GuildTextBasedChannel>().nullable(),
+  normal: z.custom<GuildTextBasedChannel>().nullable(),
+  private: z.custom<GuildTextBasedChannel>().nullable(),
+  waiting: z.custom<GuildTextBasedChannel>().nullable(),
+  roleplay: z.custom<GuildTextBasedChannel>().nullable(),
+});
 
-  guild: Guild = {} as Guild;
+const Members = z.object({
+  time: z.custom<GuildMember>().nullable(),
+  tuubaa: z.custom<GuildMember>().nullable(),
+});
 
-  constructor(data: { roles: T[]; channels: T[]; members: T[] }) {
-    this.rawRoles = data.roles;
-    this.rawChannels = data.channels;
-    this.rawMembers = data.members;
+type Roles = z.infer<typeof Roles>;
+type Channels = z.infer<typeof Channels>;
+type Members = z.infer<typeof Members>;
+
+class Snowflake {
+  roles!: Roles;
+  channels!: Channels;
+  members!: Members;
+
+  guild!: Guild;
+
+  async updateRole(name: keyof Roles, id: string) {
+    await Database.config.set(name, id);
+    const role = this.guild.roles.cache.get(id);
+
+    if (!role) {
+      throw new Error(`Role not found with the id ${id}`);
+    }
+
+    this.roles[name] = role;
+  }
+
+  async updateChannel(name: keyof Channels, id: string) {
+    await Database.config.set(name, id);
+    const channel = this.guild.channels.cache.get(id);
+
+    if (!channel) {
+      throw new Error(`Channel not found with the id ${id}`);
+    }
+
+    this.channels[name] = channel as TextChannel;
+  }
+
+  async updateMember(name: keyof Members, id: string) {
+    await Database.config.set(name, id);
+    const member = this.guild.members.cache.get(id);
+
+    if (!member) {
+      throw new Error(`Member not found with the id ${id}`);
+    }
+
+    this.members[name] = member;
   }
 
   async load() {
-    // TODO: remove id
+    console.log("Loading Snowflake");
     const guildId =
       (await Database.config.get("guild")) || "1066465107200188417";
 
@@ -47,49 +96,77 @@ class Snowflakes<T extends string> {
       throw new Error(`Guild not found with the id ${guildId}`);
     }
 
-    this.roles = {} as Record<T, Role>;
+    await this.guild.members.fetch();
+    await this.guild.roles.fetch();
+    await this.guild.channels.fetch();
 
-    this.rawRoles.forEach(async (roleName) => {
-      const roleId = await Database.config.get(roleName);
+    const rawRole = {} as Record<keyof Roles, Role | null>;
+    const rawChannel = {} as Record<keyof Channels, GuildBasedChannel | null>;
+    const rawMember = {} as Record<keyof Members, GuildMember | null>;
+
+    for (const key in Roles.shape) {
+      const roleId = await Database.config.get(key);
       const role = this.guild.roles.cache.get(roleId) || null;
-      this.roles[roleName] = role;
-    });
 
-    if (!this.roles) {
-      throw new Error("No Roles in Config found?");
+      rawRole[key as keyof Roles] = role;
     }
 
-    this.rawChannels.forEach(async (channelName) => {
-      const channelId = await Database.config.get(channelName);
+    for (const key in Channels.shape) {
+      const channelId = await Database.config.get(key);
       const channel = this.guild.channels.cache.get(channelId) || null;
-      this.channels[channelName] = channel;
-    });
 
-    if (!this.channels) {
-      throw new Error("No Channels in Config found?");
+      rawChannel[key as keyof Channels] = channel;
     }
 
-    this.rawMembers.forEach(async (memberName) => {
-      const memberId = await Database.config.get(memberName);
+    for (const key in Members.shape) {
+      const memberId = await Database.config.get(key);
       const member = this.guild.members.cache.get(memberId) || null;
-      this.members[memberName] = member;
-    });
 
-    if (!this.members) {
-      throw new Error("No Members in Config found?");
+      rawMember[key as keyof Members] = member;
     }
+
+    this.roles = Roles.parse(rawRole);
+    this.channels = Channels.parse(rawChannel);
+    this.members = Members.parse(rawMember);
   }
 }
 
-export const snowflake = new Snowflakes({
-  roles: ["admin", "mod", "user"],
-  channels: ["general", "log", "mod", "admin"],
-  members: ["tuubaa", "time"],
-});
+export const snowflake = new Snowflake();
 
 export const snowflakeRouter = router({
-  getRole: publicProcedure.query(async (opts) => {
-    // [..]
-    return [snowflake.roles];
+  roles: publicProcedure.query(async (opts) => {
+    let response = {} as Record<
+      string,
+      { label: string; id: string; color: number } | null
+    >;
+
+    for (const key in snowflake.roles) {
+      if (!snowflake.roles[key as keyof Roles]) {
+        response[key] = null;
+        continue;
+      }
+      response[key] = {
+        label: snowflake.roles[key as keyof Roles]!.name,
+        id: snowflake.roles[key as keyof Roles]!.id,
+        color: snowflake.roles[key as keyof Roles]!.color,
+      };
+    }
+    return response;
   }),
+  allRoles: publicProcedure.query(async (opts) => {
+    const lol = snowflake.guild.roles.cache.map((role) => ({
+      label: role.name,
+      id: role.id,
+      color: role.color,
+    }));
+    console.log(lol);
+    return lol;
+  }),
+  updateRoles: publicProcedure
+    .input(z.object({ roleName: z.string(), roleId: z.string() }))
+    .mutation(async (opts) => {
+      const { input } = opts;
+      console.log(input);
+      await snowflake.updateRole(input.roleName as keyof Roles, input.roleId);
+    }),
 });

@@ -1,23 +1,19 @@
-import {
-  QueryProcedure,
-  Router,
-  RouterRecord,
-} from "@trpc/server/unstable-core-do-not-import";
 import { Commands } from "../types/commands";
 // import { utils } from "./utils";
 import { client } from "../bot";
-import { Client, Events } from "discord.js";
+import { CacheType, Client, Events, Interaction } from "discord.js";
 import { ready } from "./ready";
 import { Module } from "../types/module";
 import { utils } from "./utils";
 import { snowflake } from "../lib/snowflake";
+import { level } from "./level";
+import { voice } from "./voice";
+import { roleplay } from "./roleplay";
+import { music } from "./music";
 
 class ModuleManager {
   modules: {
-    module: Module<
-      { ctx: any; meta: any; errorShape: any; transformer: any },
-      RouterRecord
-    >;
+    module: Module;
     enabled: boolean;
   }[];
 
@@ -46,10 +42,21 @@ class ModuleManager {
     }
 
     await snowflake.load();
-  }
+    moduleManager;
+    snowflake.updateRole("admin", "1235704475969126484");
+    snowflake.updateRole("mod", "1235704506646532197");
+    snowflake.updateRole("user", "1066465107200188417");
 
-  getRoutes() {
-    return routers;
+    snowflake.updateChannel("general", "1235704919206662185");
+    snowflake.updateChannel("log", "1235704945794224159");
+    snowflake.updateChannel("bot", "1235704967151616121");
+
+    snowflake.updateMember("time", "795306274467348510");
+    snowflake.updateChannel("normal", "1236658812455354448");
+    snowflake.updateChannel("private", "1236658838342467636");
+    snowflake.updateChannel("waiting", "1236658873616568380");
+    snowflake.updateChannel("roleplay", "1235704919206662185");
+    // snowflake.updateMember("tuubaa", "1066465107200188417");
   }
 
   async listenCommands() {
@@ -61,8 +68,7 @@ class ModuleManager {
       });
     });
 
-    client.on("interactionCreate", async (interaction) => {
-      console.log(interaction);
+    client.on(Events.InteractionCreate, async (interaction) => {
       if (!interaction.isChatInputCommand()) return;
 
       const command = commands.get(interaction.commandName);
@@ -102,11 +108,6 @@ class ModuleManager {
   }
 }
 
-const routers = {
-  ready: ready.router,
-  utils: utils.router,
-};
-
 export const moduleManager = new ModuleManager({
   // TODO: to dynamic import modules
   modules: [
@@ -116,6 +117,22 @@ export const moduleManager = new ModuleManager({
     },
     {
       module: utils,
+      enabled: true,
+    },
+    {
+      module: level,
+      enabled: true,
+    },
+    {
+      module: voice,
+      enabled: true,
+    },
+    {
+      module: roleplay,
+      enabled: true,
+    },
+    {
+      module: music,
       enabled: true,
     },
   ],

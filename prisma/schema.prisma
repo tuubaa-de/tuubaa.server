@@ -11,3 +11,47 @@ model Config {
   id   String
   name String @id @unique
 }
+
+model Level {
+  userId String @id @unique
+  xp     Int
+  level  Int
+}
+
+model Messages {
+  messageId String   @id @unique
+  message   String
+  timestamp DateTime
+}
+
+model Voice {
+  voiceId     String        @id @unique
+  owner       String
+  private     Boolean
+  locked      Boolean
+  VoiceAccess VoiceAccess[]
+}
+
+model VoiceAccess {
+  voiceId String
+  userId  String
+  Voice   Voice  @relation(fields: [voiceId], references: [voiceId])
+
+  @@id([voiceId, userId])
+}
+
+model User {
+  id        String @id @unique
+  blockedBy User[] @relation("blocked")
+  blocked   User[] @relation("blocked")
+  friends   User[] @relation("friends")
+  friendOf  User[] @relation("friends")
+}
+
+model UserConfig {
+  userId String  @id @unique
+  ping   Boolean
+  prefix String
+  suffix String
+  limit  Int
+}
