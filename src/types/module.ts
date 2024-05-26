@@ -3,7 +3,7 @@ import { Commands } from "./commands";
 export class Module {
   name: string;
   commands: Commands[];
-  entry: () => Promise<void>;
+  entry: () => Promise<unknown>;
 
   constructor(data: Required<Module>) {
     this.name = data.name;

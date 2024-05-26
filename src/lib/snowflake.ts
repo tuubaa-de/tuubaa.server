@@ -19,6 +19,8 @@ const Roles = z.object({
   admin: z.custom<Role>().nullable(),
   mod: z.custom<Role>().nullable(),
   user: z.custom<Role>().nullable(),
+  ban: z.custom<Role>().nullable(),
+  mute: z.custom<Role>().nullable(),
 });
 
 const Channels = z.object({
@@ -30,6 +32,11 @@ const Channels = z.object({
   private: z.custom<GuildTextBasedChannel>().nullable(),
   waiting: z.custom<GuildTextBasedChannel>().nullable(),
   roleplay: z.custom<GuildTextBasedChannel>().nullable(),
+  rules: z.custom<GuildTextBasedChannel>().nullable(),
+  introduce: z.custom<GuildTextBasedChannel>().nullable(),
+  minecraft: z.custom<GuildTextBasedChannel>().nullable(),
+  support: z.custom<GuildTextBasedChannel>().nullable(),
+  welcome: z.custom<GuildTextBasedChannel>().nullable(),
 });
 
 const Members = z.object({
@@ -84,7 +91,7 @@ class Snowflake {
   async load() {
     console.log("Loading Snowflake");
     const guildId =
-      (await Database.config.get("guild")) || "1066465107200188417";
+      (await Database.config.get("guild")) || "1009761004214833213";
 
     if (!guildId) {
       throw new Error("Guild ID not found in Config");
@@ -159,14 +166,12 @@ export const snowflakeRouter = router({
       id: role.id,
       color: role.color,
     }));
-    console.log(lol);
     return lol;
   }),
   updateRoles: publicProcedure
     .input(z.object({ roleName: z.string(), roleId: z.string() }))
     .mutation(async (opts) => {
       const { input } = opts;
-      console.log(input);
       await snowflake.updateRole(input.roleName as keyof Roles, input.roleId);
     }),
 });

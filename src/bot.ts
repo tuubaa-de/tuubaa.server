@@ -1,11 +1,9 @@
-import { Client, Events, GatewayIntentBits } from "discord.js";
-import * as dotenv from "dotenv";
-import { moduleManager } from "./module/handler";
+import { Client, Events, GatewayIntentBits, Guild } from "discord.js";
+import { moduleManager } from "./modules/handler";
+import { MoonlinkManager } from "moonlink.js";
+import { ClientWrapper } from "./models/client";
 
-// dotenv.config({ path: `.env.${process.env["ENV"]}` });
-dotenv.config();
-
-export let client = new Client({
+export let client = new ClientWrapper({
   intents: [
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,

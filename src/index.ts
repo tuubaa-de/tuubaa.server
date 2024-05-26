@@ -1,20 +1,25 @@
 import bot from "./bot";
 import { publicProcedure, router } from "./endpoint";
-import { snowflake, snowflakeRouter } from "./lib/snowflake";
-import {
-  createHTTPHandler,
-  createHTTPServer,
-} from "@trpc/server/adapters/standalone";
-import { utilsRouter } from "./module/utils";
-import { readyRouter } from "./module/ready";
-import { nodeHTTPRequestHandler } from "@trpc/server/dist/adapters/node-http";
-import cors from "cors";
+import { snowflakeRouter } from "./lib/snowflake";
+import * as dotenv from "dotenv";
+import { createHTTPHandler } from "@trpc/server/adapters/standalone";
+import { utilsRouter } from "./modules/utils";
+import { readyRouter } from "./modules/ready";
 import { createServer } from "http";
+
+var command_args = process.argv;
+
+if (command_args.includes("-p")) {
+  console.log("Prduction mode");
+  dotenv.config({ path: `.env.production` });
+} else {
+  console.log("Development mode");
+  dotenv.config({});
+}
 
 export const appRouter = router({
   snowflake: snowflakeRouter,
   hello: publicProcedure.query((props) => {
-    console.log("hello", props);
     return "Hello, world!";
   }),
   utils: utilsRouter,
@@ -26,7 +31,6 @@ export type AppRouter = typeof appRouter;
 const handler = createHTTPHandler({
   router: appRouter,
   createContext() {
-    console.log("context 3");
     return {};
   },
 });
@@ -44,8 +48,6 @@ const server = createServer((req, res) => {
 
 server.listen(3333);
 
-server.on("request", (lol) => {
-  console.log(lol.statusCode, lol.statusMessage, lol.method, lol.url);
-});
+server.on("request", (lol) => {});
 
 bot.run();
