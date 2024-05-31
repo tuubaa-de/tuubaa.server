@@ -6,3 +6,10 @@ export function voiceEmbed(message: string, color?: keyof typeof Colors) {
     .setColor(color || "Blue")
     .setDescription(message);
 }
+
+export function succesEmbed(message: string) {
+  return new EmbedBuilder()
+    .setTitle("Erfolgreich")
+    .setColor("Green")
+    .setDescription(message);
+}

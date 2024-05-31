@@ -62,7 +62,7 @@ export function createTicketModalHandler() {
     const embed = new EmbedBuilder()
       .setTitle(title)
       .setDescription(description)
-      .setColor("#2F3136");
+      .setColor("#3498db");
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()

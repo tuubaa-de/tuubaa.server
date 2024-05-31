@@ -12,6 +12,9 @@ import { roleplay } from "./roleplay";
 import { music } from "./music";
 import { welcome } from "./welcome";
 import { ticket } from "./ticket";
+import { logs } from "./logs";
+import { roleExplain } from "./role_explain";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 class ModuleManager {
   modules: {
@@ -30,7 +33,20 @@ class ModuleManager {
 
   async listenError() {
     process.on("unhandledRejection", (error) => {
-      console.log("Unhandled promise rejection:", error);
+      console.log("unhandledRejection:", error);
+    });
+
+    process.on("uncaughtException", (error) => {
+      if (error instanceof PrismaClientKnownRequestError) {
+        switch (error.code) {
+          case "1001":
+            console.log("Can't reach Database connection");
+            return;
+        }
+        return;
+      }
+
+      console.log("uncaughtException:", error);
     });
 
     client.on(Events.Error, (error) => {
@@ -129,6 +145,14 @@ export const moduleManager = new ModuleManager({
     },
     {
       module: ticket,
+      enabled: true,
+    },
+    {
+      module: logs,
+      enabled: true,
+    },
+    {
+      module: roleExplain,
       enabled: true,
     },
   ],

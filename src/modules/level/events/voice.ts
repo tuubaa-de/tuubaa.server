@@ -9,7 +9,7 @@ export async function onVoice() {
     Object.keys(currentUserInVoice).forEach((key) => {
       const user = snowflake.guild.members.cache.get(key);
       if (!user) {
-        console.log(`User not found: ${key}`);
+        delete currentUserInVoice[key];
         return;
       }
       if (currentUserInVoice[key] == VoiceMode.FULL) {

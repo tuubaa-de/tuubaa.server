@@ -15,6 +15,7 @@ import { snowflake } from "../../lib/snowflake";
 import Vibrant from "node-vibrant";
 import { welcomeMessage } from "./events/welcomeMessage";
 import { greetMember } from "./events/greetMember";
+import { rememberRole } from "./events/remberRole";
 
 async function entry() {
   console.log(">> Welcome System loaded");
@@ -23,6 +24,7 @@ async function entry() {
   snowflake.updateChannel("general", "1009764889641897985");
   welcomeMessage();
   greetMember();
+  rememberRole();
 }
 
 export const welcome = new Module({

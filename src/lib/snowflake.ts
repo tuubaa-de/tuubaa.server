@@ -16,11 +16,29 @@ import { publicProcedure, router } from "../endpoint";
 import { z } from "zod";
 
 const Roles = z.object({
-  admin: z.custom<Role>().nullable(),
-  mod: z.custom<Role>().nullable(),
   user: z.custom<Role>().nullable(),
   ban: z.custom<Role>().nullable(),
   mute: z.custom<Role>().nullable(),
+  team: z.custom<Role>().nullable(),
+
+  admin: z.custom<Role>().nullable(),
+
+  owner: z.custom<Role>().nullable(),
+  dev: z.custom<Role>().nullable(),
+  manager: z.custom<Role>().nullable(),
+  mod: z.custom<Role>().nullable(),
+  emotes: z.custom<Role>().nullable(),
+
+  upgrader: z.custom<Role>().nullable(),
+  friend: z.custom<Role>().nullable(),
+  youtube: z.custom<Role>().nullable(),
+  artist: z.custom<Role>().nullable(),
+
+  unschuldig: z.custom<Role>().nullable(),
+  verdaechtig: z.custom<Role>().nullable(),
+  schuldig: z.custom<Role>().nullable(),
+  mitentfuehrer: z.custom<Role>().nullable(),
+  beifahrer: z.custom<Role>().nullable(),
 });
 
 const Channels = z.object({

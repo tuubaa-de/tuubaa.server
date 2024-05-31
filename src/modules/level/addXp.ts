@@ -5,9 +5,10 @@ import { sendLevelMessage } from ".";
 
 export async function addXP(user: GuildMember, xp: number) {
   const levelRole = {
-    "10": snowflake.roles.admin,
-    "20": snowflake.roles.mod,
-    "30": snowflake.roles.user,
+    "25": snowflake.roles.schuldig,
+    "50": snowflake.roles.verdaechtig,
+    "75": snowflake.roles.mitentfuehrer,
+    "100": snowflake.roles.beifahrer,
   };
   const levelData = await LevelDatabase.getLevel(user.id);
 

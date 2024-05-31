@@ -14,7 +14,6 @@ export async function topInteration() {
     const data = interaction.customId.split(":");
 
     if (data[0] !== "top") {
-      console.log("Not a top interaction");
       return;
     }
 

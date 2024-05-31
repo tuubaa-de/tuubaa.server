@@ -62,8 +62,49 @@ model Keks {
 }
 
 model Ticket {
-  messageId   String @id @unique
-  channelId   String
-  title       String
-  description String
+  messageId     String          @id @unique
+  channelId     String
+  title         String
+  description   String
+  ticketMessage TicketMessage[]
+  ticketChannel TicketChannel[]
+}
+
+model Rules {
+  message String @id @unique
+  channel String
+  guild   String @unique
+}
+
+model TicketMessage {
+  messageId String @id @unique
+  ticketId  String
+  ticket    Ticket @relation(fields: [ticketId], references: [messageId])
+  userId    String
+  message   String
+  timestamp Int
+}
+
+model TicketChannel {
+  channelId String @id @unique
+  ticket    Ticket @relation(fields: [ticketId], references: [messageId])
+  ticketId  String
+}
+
+model RemberRole {
+  roleId String
+  userId String
+  guild  String
+
+  @@id([roleId, userId])
+}
+
+model RoleExplanation {
+  guildId String @id @unique
+  message String @unique
+}
+
+model JoinMessage {
+  guildId String @id @unique
+  userId  String @unique
 }
