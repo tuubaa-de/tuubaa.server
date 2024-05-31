@@ -5,10 +5,10 @@ import { sendLevelMessage } from ".";
 
 export async function addXP(user: GuildMember, xp: number) {
   const levelRole = {
-    "25": snowflake.roles.schuldig,
-    "50": snowflake.roles.verdaechtig,
-    "75": snowflake.roles.mitentfuehrer,
-    "100": snowflake.roles.beifahrer,
+    25: snowflake.roles.schuldig,
+    50: snowflake.roles.verdaechtig,
+    75: snowflake.roles.mitentfuehrer,
+    100: snowflake.roles.beifahrer,
   };
   const levelData = await LevelDatabase.getLevel(user.id);
 
@@ -29,9 +29,10 @@ export async function addXP(user: GuildMember, xp: number) {
     let highestRole = 0;
 
     Object.keys(levelRole).forEach((key) => {
-      if (level >= parseInt(key) && parseInt(key) > highestRole) {
-        highestRole = parseInt(key);
-        currentRoleId = levelRole[key as keyof typeof levelRole]?.id;
+      const keyInt = parseInt(key);
+      if (level >= keyInt && keyInt > highestRole) {
+        highestRole = keyInt;
+        currentRoleId = levelRole[keyInt as keyof typeof levelRole]?.id;
       }
     });
 
