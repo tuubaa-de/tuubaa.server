@@ -1,6 +1,12 @@
-import { PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
+import {
+  PermissionFlagsBits,
+  SlashCommandBuilder,
+  TextBasedChannel,
+} from "discord.js";
 import { SlashInteraction } from "../../../types/commands";
 import { buildRoleEmbed } from "..";
+import { prisma } from "../../../lib/database";
+import { snowflake } from "../../../lib/snowflake";
 
 export const createRoleEmbed = {
   data: new SlashCommandBuilder()
@@ -12,7 +18,46 @@ export const createRoleEmbed = {
 
     const embed = await buildRoleEmbed();
 
-    await interaction.channel?.send({ embeds: [embed] });
+    const message = await interaction.channel?.send({ embeds: [embed] });
+
+    const roleExplanations = await prisma.roleExplanation.findMany({
+      where: {
+        guildId: interaction.guildId || snowflake.guild.id,
+      },
+    });
+
+    for (const roleExplanation of roleExplanations) {
+      const channel = interaction.guild?.channels.cache.get(
+        roleExplanation.channelId
+      ) as TextBasedChannel | null;
+      if (channel === null) {
+        continue;
+      }
+      const message = await channel.messages.fetch(roleExplanation.messageId);
+
+      await prisma.roleExplanation.delete({
+        where: {
+          messageId: message.id,
+        },
+      });
+      if (!message) {
+        continue;
+      }
+      await message.delete();
+    }
+
+    if (!message) {
+      await interaction.editReply("Fehler beim Erstellen der Nachricht!");
+      return;
+    }
+
+    await prisma.roleExplanation.create({
+      data: {
+        messageId: message.id,
+        guildId: message.guildId || snowflake.guild.id,
+        channelId: message.channelId,
+      },
+    });
 
     await interaction.editReply("Erstellt!");
   },

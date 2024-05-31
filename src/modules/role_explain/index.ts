@@ -3,9 +3,12 @@ import { Module } from "../../types/module";
 import { EmbedBuilder } from "@discordjs/builders";
 import { snowflake } from "../../lib/snowflake";
 import { createRoleEmbed } from "./commands/createRoleEmbed";
+import { roleExplainUpdate } from "./events/roleExplainUpdate";
 
 async function entry() {
   console.log(">> Role Explain Module Loaded");
+
+  roleExplainUpdate();
 
   snowflake.updateRole("owner", "1009763136586387467");
   snowflake.updateRole("dev", "1009767438071648296");
@@ -128,7 +131,6 @@ export async function buildRoleEmbed() {
 
   ${pink}${emotes}
   > ${emotesText}
-  ${emotesMembers}
   ‎ 
   ‎ 
   `;

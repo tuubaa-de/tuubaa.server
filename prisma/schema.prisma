@@ -100,8 +100,9 @@ model RemberRole {
 }
 
 model RoleExplanation {
-  guildId String @id @unique
-  message String @unique
+  guildId   String
+  messageId String @id @unique
+  channelId String
 }
 
 model JoinMessage {
