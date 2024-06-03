@@ -1,36 +1,33 @@
 import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  CategoryChannel,
-  ChannelType,
-  ModalBuilder,
-  SlashCommandBuilder,
-  SlashCommandSubcommandBuilder,
-  TextInputBuilder,
-  TextInputStyle,
+	ActionRowBuilder,
+	ButtonStyle,
+	CategoryChannel,
+	ChannelType,
+	ModalBuilder,
+	TextInputBuilder,
+	TextInputStyle,
 } from "discord.js";
-import { SlashInteraction } from "../../../types/commands";
-import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
+import {SlashInteraction} from "../../../types/commands";
+import {SlashCommandPermissionsBuilder} from "../../../models/slashCommandBuilder";
 
 export const createTicket = {
-  data: new SlashCommandPermissionsBuilder()
-    .setName("ticket")
-    .setDescription("Das Ticket System")
-    .addSubcommand((subcommand) =>
-      subcommand
-        .setName("create")
-        .setDescription("Erstelle ein Ticket.")
-        .addChannelOption((option) =>
-          option
-            .setName("where")
-            .setDescription("Wo sollen die neuen Ticket erstellt werden")
-            .addChannelTypes(ChannelType.GuildCategory)
-            .setRequired(false)
-        )
-    ),
-  async execute(interaction: SlashInteraction) {
-    // await interaction.deferReply({ ephemeral: true });
+	data: new SlashCommandPermissionsBuilder()
+		.setName("ticket")
+		.setDescription("Das Ticket System")
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("create")
+				.setDescription("Erstelle ein Ticket.")
+				.addChannelOption((option) =>
+					option
+						.setName("where")
+						.setDescription("Wo sollen die neuen Ticket erstellt werden")
+						.addChannelTypes(ChannelType.GuildCategory)
+						.setRequired(false)
+				)
+		),
+	async execute(interaction: SlashInteraction) {
+		// await interaction.deferReply({ ephemeral: true });
 
 		const channel = interaction.options.getChannel("where") as CategoryChannel;
 

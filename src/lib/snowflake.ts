@@ -73,6 +73,7 @@ class Snowflake {
 
 		this.roles[name] = role;
 	}
+
 	async getRole(roleId: string) {
 		return this.guild.roles.cache.get(roleId);
 	}

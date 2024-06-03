@@ -1,20 +1,13 @@
-import { Top } from "canvafy";
-import {
-  SlashCommandBuilder,
-  EmbedBuilder,
-  AttachmentBuilder,
-} from "discord.js";
-import { SlashInteraction } from "../../../types/commands";
-import { LevelDatabase } from "../database";
-import { topBuilder } from "..";
-import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
+import {SlashInteraction} from "../../../types/commands";
+import {topBuilder} from "..";
+import {SlashCommandPermissionsBuilder} from "../../../models/slashCommandBuilder";
 
 export const topLevels = {
-  data: new SlashCommandPermissionsBuilder()
-    .setName("top")
-    .setDescription("Zeigt die Top-Level an."),
-  async execute(interaction: SlashInteraction) {
-    await interaction.deferReply();
+	data: new SlashCommandPermissionsBuilder()
+		.setName("top")
+		.setDescription("Zeigt die Top-Level an."),
+	async execute(interaction: SlashInteraction) {
+		await interaction.deferReply();
 
 		const topData = await topBuilder(1, interaction);
 

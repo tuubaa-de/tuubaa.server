@@ -1,21 +1,17 @@
-import {
-  PermissionFlagsBits,
-  SlashCommandBuilder,
-  TextBasedChannel,
-} from "discord.js";
-import { SlashInteraction } from "../../../types/commands";
-import { buildRoleEmbed } from "..";
-import { prisma } from "../../../lib/database";
-import { snowflake } from "../../../lib/snowflake";
-import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
+import {PermissionFlagsBits, TextBasedChannel,} from "discord.js";
+import {SlashInteraction} from "../../../types/commands";
+import {buildRoleEmbed} from "..";
+import {prisma} from "../../../lib/database";
+import {snowflake} from "../../../lib/snowflake";
+import {SlashCommandPermissionsBuilder} from "../../../models/slashCommandBuilder";
 
 export const createRoleEmbed = {
-  data: new SlashCommandPermissionsBuilder()
-    .setName("role_explian_embed")
-    .setDescription("Erstelle eine Embed Nachricht, die die Rollen erklärt.")
-    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
-  async execute(interaction: SlashInteraction) {
-    await interaction.deferReply({ ephemeral: true });
+	data: new SlashCommandPermissionsBuilder()
+		.setName("role_explian_embed")
+		.setDescription("Erstelle eine Embed Nachricht, die die Rollen erklärt.")
+		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+	async execute(interaction: SlashInteraction) {
+		await interaction.deferReply({ephemeral: true});
 
 		const embed = await buildRoleEmbed();
 

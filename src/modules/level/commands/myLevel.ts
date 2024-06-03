@@ -4,9 +4,10 @@ import {createCanvas, loadImage} from "canvas";
 import {LevelDatabase} from "../database";
 import {RankCard} from "rankcard";
 import {calcLevel} from "../levelHelper";
+import {SlashCommandPermissionsBuilder} from "../../../models/slashCommandBuilder";
 
 export const myLevel = {
-	data: new SlashCommandBuilder()
+	data: new SlashCommandPermissionsBuilder()
 		.setName("level")
 		.setDescription("Zeigt dein Level an.")
 		.addUserOption((option) =>

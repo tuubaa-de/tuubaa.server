@@ -6,7 +6,8 @@ import {
 	EmbedBuilder,
 	Guild,
 	GuildMember,
-	Interaction, Role,
+	Interaction,
+	Role,
 	User,
 } from "discord.js";
 import {Module} from "../../types/module";

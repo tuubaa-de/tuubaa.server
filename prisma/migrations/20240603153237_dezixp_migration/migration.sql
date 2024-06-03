@@ -6,14 +6,20 @@
 
 */
 -- RedefineTables
-PRAGMA foreign_keys=OFF;
-CREATE TABLE "new_Level" (
-    "userId" TEXT NOT NULL PRIMARY KEY,
+PRAGMA
+foreign_keys=OFF;
+CREATE TABLE "new_Level"
+(
+    "userId" TEXT    NOT NULL PRIMARY KEY,
     "dezixp" INTEGER NOT NULL
 );
-INSERT INTO "new_Level" ("userId") SELECT "userId" FROM "Level";
+INSERT INTO "new_Level" ("userId")
+SELECT "userId"
+FROM "Level";
 DROP TABLE "Level";
 ALTER TABLE "new_Level" RENAME TO "Level";
-CREATE UNIQUE INDEX "Level_userId_key" ON "Level"("userId");
-PRAGMA foreign_key_check("Level");
-PRAGMA foreign_keys=ON;
+CREATE UNIQUE INDEX "Level_userId_key" ON "Level" ("userId");
+PRAGMA
+foreign_key_check("Level");
+PRAGMA
+foreign_keys=ON;

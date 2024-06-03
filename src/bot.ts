@@ -1,7 +1,6 @@
 import {Events, GatewayIntentBits} from "discord.js";
 import {moduleManager} from "./modules/handler";
 import {ClientWrapper} from "./models/client";
-import {calcLevel} from "./modules/level/levelHelper";
 
 export let client = new ClientWrapper({
 	intents: [

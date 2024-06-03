@@ -30,12 +30,12 @@ export async function initXPVoiceEvaluator() {
 		if (after.channelId) {
 
 			// Assign mute state
-			if (after.deaf)         currentUserInVoice[user.id] = VoiceMode.ZERO;
-			else if (after.mute)    currentUserInVoice[user.id] = VoiceMode.HALF;
-			else                    currentUserInVoice[user.id] = VoiceMode.FULL;
+			if (after.deaf) currentUserInVoice[user.id] = VoiceMode.ZERO;
+			else if (after.mute) currentUserInVoice[user.id] = VoiceMode.HALF;
+			else currentUserInVoice[user.id] = VoiceMode.FULL;
 
 			// Add interval if not already added
-			if(!voiceIntervals[user.id]) {
+			if (!voiceIntervals[user.id]) {
 				voiceIntervals[user.id] = setInterval(() => {
 
 					// If user is not in voice, clear and remove interval
@@ -58,7 +58,7 @@ export async function initXPVoiceEvaluator() {
 		} else { // If user left a voice channel
 			// Remove interval and delete user from currentUserInVoice
 			delete currentUserInVoice[user.id];
-			if(voiceIntervals[user.id]) {
+			if (voiceIntervals[user.id]) {
 				clearInterval(voiceIntervals[user.id]);
 				delete voiceIntervals[user.id];
 			}
@@ -71,7 +71,10 @@ export async function initXPVoiceEvaluator() {
  * Call this for reinitialization.
  */
 export function clearVoiceLevelling() {
-	Object.keys(voiceIntervals).forEach(key => {	clearInterval(voiceIntervals[key]);	delete voiceIntervals[key];	});
+	Object.keys(voiceIntervals).forEach(key => {
+		clearInterval(voiceIntervals[key]);
+		delete voiceIntervals[key];
+	});
 	Object.keys(currentUserInVoice).forEach(key => delete currentUserInVoice[key]);
 	Object.keys(voiceDuration).forEach(key => delete voiceDuration[key]);
 }

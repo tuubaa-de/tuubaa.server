@@ -1,10 +1,5 @@
-import {
-	CacheType,
-	ChatInputCommandInteraction,
-	SlashCommandBuilder,
-	SlashCommandSubcommandsOnlyBuilder,
-} from "discord.js";
-import { SlashCommandPermissionsBuilder } from "../models/slashCommandBuilder";
+import {CacheType, ChatInputCommandInteraction, SlashCommandSubcommandsOnlyBuilder,} from "discord.js";
+import {SlashCommandPermissionsBuilder} from "../models/slashCommandBuilder";
 
 export type Commands = {
 	data:

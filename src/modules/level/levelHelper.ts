@@ -77,11 +77,11 @@ export function evalTextMessage(
 			* Math.min(text.content.length, levellingConfig.TEXT_MAX_LENGTH),
 		messageWorthAfterServerActivity: number =
 			lengthCalculation * (
-			Math.pow(levellingConfig.TEXT_FUNC_EXP_BASE,
-				server_activity
-				/ levellingConfig.TEXT_FUNC_CONST_A
-				+ levellingConfig.TEXT_FUNC_OFFSET_X)
-			+ levellingConfig.TEXT_FUNC_OFFSET_Y),
+				Math.pow(levellingConfig.TEXT_FUNC_EXP_BASE,
+					server_activity
+					/ levellingConfig.TEXT_FUNC_CONST_A
+					+ levellingConfig.TEXT_FUNC_OFFSET_X)
+				+ levellingConfig.TEXT_FUNC_OFFSET_Y),
 		messageWorthAfterUserActivity: number =
 			messageWorthAfterServerActivity
 			* (1 - personalActivityPenalty(user_activity_daily, user_activity_weekly));
@@ -114,11 +114,11 @@ function timeofdayPenalty(daytime: number): boolean {
 function personalActivityPenalty(user_activity_daily: number, user_activity_weekly: number): number {
 	const dailyPenalty =
 		user_activity_daily < levellingConfig.TEXT_FALLOFF_DAILY_START ? levellingConfig.TEXT_FALLOFF_DAILY_FROM :
-		user_activity_daily > levellingConfig.TEXT_FALLOFF_DAILY_END ? levellingConfig.TEXT_FALLOFF_DAILY_TO :
-		(Math.abs(levellingConfig.TEXT_FALLOFF_DAILY_END - user_activity_daily) / Math.abs(levellingConfig.TEXT_FALLOFF_DAILY_END - levellingConfig.TEXT_FALLOFF_DAILY_START)) * Math.abs(levellingConfig.TEXT_FALLOFF_DAILY_FROM - levellingConfig.TEXT_FALLOFF_DAILY_TO);
+			user_activity_daily > levellingConfig.TEXT_FALLOFF_DAILY_END ? levellingConfig.TEXT_FALLOFF_DAILY_TO :
+				(Math.abs(levellingConfig.TEXT_FALLOFF_DAILY_END - user_activity_daily) / Math.abs(levellingConfig.TEXT_FALLOFF_DAILY_END - levellingConfig.TEXT_FALLOFF_DAILY_START)) * Math.abs(levellingConfig.TEXT_FALLOFF_DAILY_FROM - levellingConfig.TEXT_FALLOFF_DAILY_TO);
 	const weeklyPenalty =
 		user_activity_weekly < levellingConfig.TEXT_FALLOFF_WEEKLY_START ? levellingConfig.TEXT_FALLOFF_WEEKLY_FROM :
-		user_activity_weekly > levellingConfig.TEXT_FALLOFF_WEEKLY_END ? levellingConfig.TEXT_FALLOFF_WEEKLY_TO :
-		(Math.abs(levellingConfig.TEXT_FALLOFF_WEEKLY_END - user_activity_weekly) / Math.abs(levellingConfig.TEXT_FALLOFF_WEEKLY_END - levellingConfig.TEXT_FALLOFF_WEEKLY_START)) * Math.abs(levellingConfig.TEXT_FALLOFF_WEEKLY_FROM - levellingConfig.TEXT_FALLOFF_WEEKLY_TO);
+			user_activity_weekly > levellingConfig.TEXT_FALLOFF_WEEKLY_END ? levellingConfig.TEXT_FALLOFF_WEEKLY_TO :
+				(Math.abs(levellingConfig.TEXT_FALLOFF_WEEKLY_END - user_activity_weekly) / Math.abs(levellingConfig.TEXT_FALLOFF_WEEKLY_END - levellingConfig.TEXT_FALLOFF_WEEKLY_START)) * Math.abs(levellingConfig.TEXT_FALLOFF_WEEKLY_FROM - levellingConfig.TEXT_FALLOFF_WEEKLY_TO);
 	return Math.min(dailyPenalty, weeklyPenalty);
 }
