@@ -5,6 +5,10 @@ import {addXP} from "../addXp";
 import {evalTextMessage} from "../levelHelper";
 import {Deque} from "../deque";
 
+/**
+ * Initialize the message levelling system
+ * Important: Call this function exactly once on bot setup
+ */
 export async function initMessageXPEvaluator() {
 
 	const server_timestamps: Deque<Date> = new Deque<Date>();
