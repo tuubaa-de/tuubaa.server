@@ -1,14 +1,14 @@
-import { Module } from "../../types/module";
-import { auditlog } from "./events/auditlog";
+import {Module} from "../../types/module";
+import {auditlog} from "./events/auditlog";
 
 async function entry() {
-  console.log(">> logs module loaded");
+	console.log(">> logs module loaded");
 
-  auditlog();
+	auditlog();
 }
 
 export const logs = new Module({
-  name: "logs",
-  entry: entry,
-  commands: [],
+	name: "logs",
+	entry: entry,
+	commands: [],
 });
