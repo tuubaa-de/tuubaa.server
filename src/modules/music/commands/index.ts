@@ -6,9 +6,13 @@ import { pause } from "./pause";
 import { resume } from "./resume";
 import { queue } from "./queue";
 import { stop } from "./stop";
+import {
+  SlashCommandPermissionType,
+  SlashCommandPermissionsBuilder,
+} from "../../../models/slashCommandBuilder";
 
 export const musicController = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("music")
     .setDescription("Ist der Bot ansprechbar?")
     .addSubcommand((subcommand) =>

@@ -9,9 +9,10 @@ import { LevelDatabase } from "../database";
 import { RankCard } from "rankcard";
 
 import { Top } from "canvafy";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 export const myLevel = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("level")
     .setDescription("Zeigt dein Level an.")
     .addUserOption((option) =>

@@ -6,13 +6,15 @@ import {
   ChannelType,
   ModalBuilder,
   SlashCommandBuilder,
+  SlashCommandSubcommandBuilder,
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js";
 import { SlashInteraction } from "../../../types/commands";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 export const createTicket = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("ticket")
     .setDescription("Das Ticket System")
     .addSubcommand((subcommand) =>

@@ -7,9 +7,10 @@ import {
 import { SlashInteraction } from "../../../types/commands";
 import { LevelDatabase } from "../database";
 import { topBuilder } from "..";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 export const topLevels = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("top")
     .setDescription("Zeigt die Top-Level an."),
   async execute(interaction: SlashInteraction) {

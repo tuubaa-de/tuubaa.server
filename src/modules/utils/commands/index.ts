@@ -7,9 +7,10 @@ import { SlashInteraction } from "../../../types/commands";
 import { uptime } from "../../../bot";
 import moment = require("moment");
 import { UtilDatabase } from "../database";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 export const ping = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("ping")
     .setDescription("Ist der Bot ansprechbar?"),
   async execute(interaction: SlashInteraction) {
@@ -24,11 +25,13 @@ export const ping = {
 };
 
 const keks = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("keks")
-    .setDescription("Keks!")
+    .setDescription("Gib dir oder jemanden ein Keks.")
     .addUserOption((option) =>
-      option.setName("user").setDescription("User").setRequired(false)
+      option
+        .setName("user")
+        .setDescription("Der User dem du ein Keks geben willst.")
     ),
   async execute(interaction: SlashInteraction) {
     const user = interaction.options.getUser("user");
@@ -53,7 +56,7 @@ const keks = {
 };
 
 const sayAsBot = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("say")
     .setDescription("Lass den Bot etwas sagen.")
     .addStringOption((option) =>

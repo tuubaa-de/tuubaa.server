@@ -26,7 +26,7 @@ export function roleExplainUpdate() {
     ];
 
     if (!allRoles.every((element) => teamRoles.includes(element))) {
-      console.log(allRoles, teamRoles);
+      // console.log(allRoles, teamRoles);
       return;
     }
 

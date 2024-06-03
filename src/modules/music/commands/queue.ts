@@ -99,6 +99,6 @@ export async function createQueue(interaction: SlashInteraction) {
   return await interaction.editReply({
     embeds: [embed],
     files: [attachment],
-    components: [playRow],
+    // components: [playRow],
   });
 }

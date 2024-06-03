@@ -7,9 +7,10 @@ import { SlashInteraction } from "../../../types/commands";
 import { buildRoleEmbed } from "..";
 import { prisma } from "../../../lib/database";
 import { snowflake } from "../../../lib/snowflake";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 export const createRoleEmbed = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("role_explian_embed")
     .setDescription("Erstelle eine Embed Nachricht, die die Rollen erklärt.")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),

@@ -109,3 +109,9 @@ model JoinMessage {
   guildId String @id @unique
   userId  String @unique
 }
+
+model Warnings {
+  userId String @id @unique
+  guild  String
+  count  Int
+}

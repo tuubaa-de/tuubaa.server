@@ -8,9 +8,10 @@ import {
 } from "discord.js";
 import { RulesDatabase } from "../database";
 import { rulePrompt } from "../events/createRuleHandler";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 export const createRule = {
-  data: new SlashCommandBuilder()
+  data: new SlashCommandPermissionsBuilder()
     .setName("create_rule")
     .setDescription(
       "Erstellt die Regel! \nWenn du die Regel updates lösche bitte die alte Regel Nachricht"
