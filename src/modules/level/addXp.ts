@@ -12,6 +12,8 @@ import {calcLevel, xpToNextLevel} from "./levelHelper";
 export async function addXP(user: GuildMember, addedXP: number) {
 	if (!user || addedXP <= 0) return;
 
+	addedXP = Math.floor(addedXP);
+
 	const levelRole: { [level: number]: Role | null } = {
 		0: snowflake.roles.levellingRole1,
 		20: snowflake.roles.levellingRole2,

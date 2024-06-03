@@ -1,7 +1,7 @@
 import {Events} from "discord.js";
 import {client} from "../../../bot";
 import {addXP} from "../addXp";
-import {levellingConfig} from "../levelHelper";
+import {levellingConfig, timeofdayPenalty} from "../levelHelper";
 
 const currentUserInVoice: { [key: string]: VoiceMode } = {};
 const voiceIntervals: { [key: string]: NodeJS.Timeout } = {};
@@ -12,14 +12,6 @@ const voiceDuration: { [key: string]: number } = {};
  * Important: Call this function exactly once on bot setup
  */
 export async function initXPVoiceEvaluator() {
-
-	// TODO Persönliche Sprachstrafe bis 2h x1, dann gegen x0 bis 12h
-	// voiceIntervals["minuteInterval"] = setInterval(() => {
-	// 	Object.keys(voiceDuration).forEach(key => {
-	// 		voiceDuration[key] -= (24*60*10);
-	// 	});
-	// }, 10 * 60 * 1000);
-
 	client.on(Events.VoiceStateUpdate, (before, after) => {
 		const user = before.member || after.member;
 
@@ -47,11 +39,11 @@ export async function initXPVoiceEvaluator() {
 
 					// Add XP based on mute state
 					if (currentUserInVoice[user.id] == VoiceMode.FULL) {
-						addXP(user, levellingConfig.VOICE_UNMUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP);
+						addXP(user, levellingConfig.VOICE_UNMUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(new Date().getTime()) ? 0 : 1));
 					} else if (currentUserInVoice[user.id] == VoiceMode.HALF) {
-						addXP(user, levellingConfig.VOICE_MUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP);
+						addXP(user, levellingConfig.VOICE_MUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(new Date().getTime()) ? 0 : 1));
 					} else {
-						addXP(user, levellingConfig.VOICE_DEAF_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP);
+						addXP(user, levellingConfig.VOICE_DEAF_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(new Date().getTime()) ? 0 : 1));
 					}
 				}, 60 * 1000);
 			}
