@@ -96,7 +96,7 @@ export function evalTextMessage(
  * Check, if the current time is within a lockdown period
  * @param daytime the time of day, from 0 to 1439 minutes (24h * 60m)
  */
-function timeofdayPenalty(daytime: number): boolean {
+export function timeofdayPenalty(daytime: number): boolean {
 	if (daytime < 0 || daytime >= 1440) throw new RangeError("Invalid time of day");
 	for (const lockdown of levellingConfig.TEXT_LOCKDOWNS) {
 		if (daytime >= lockdown[0] && daytime < lockdown[1]) {
