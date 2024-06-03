@@ -55,6 +55,11 @@ export function xpToNextLevel(xp: number): number {
 		levellingConfig.LEVELLING_FUNCTION_FACTOR * Math.pow(calcLevel(xp) + 1, 2) - xp;
 }
 
+export function xpFromThisLevel(xp: number): number {
+	return xp < 0 ? 0 :
+		levellingConfig.LEVELLING_FUNCTION_FACTOR * Math.pow(calcLevel(xp), 2);
+}
+
 
 /**
  * Evaluate the XP of a message, considering the current activity, both server and user
