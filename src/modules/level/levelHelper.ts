@@ -84,7 +84,7 @@ export function evalTextMessage(
 				+ levellingConfig.TEXT_FUNC_OFFSET_Y),
 		messageWorthAfterUserActivity: number =
 			messageWorthAfterServerActivity
-			* (1 - personalActivityPenalty(user_activity_daily, user_activity_weekly));
+			* personalActivityPenalty(user_activity_daily, user_activity_weekly);
 	if (!timeofdayPenalty(daytime)) {
 		return messageWorthAfterUserActivity;
 	} else {
