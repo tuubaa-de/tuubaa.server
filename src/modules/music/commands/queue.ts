@@ -95,9 +95,9 @@ export async function createQueue(interaction: SlashInteraction) {
 		.setImage("attachment://musiccard.png")
 		.setThumbnail("https://i.postimg.cc/JzgTDj97/oihoih.png");
 
-	return await interaction.editReply({
-		embeds: [embed],
-		files: [attachment],
-		components: [playRow],
-	});
+  return await interaction.editReply({
+    embeds: [embed],
+    files: [attachment],
+    // components: [playRow],
+  });
 }

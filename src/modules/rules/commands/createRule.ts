@@ -6,18 +6,19 @@ import {
 	SlashCommandBuilder,
 	TextBasedChannel,
 } from "discord.js";
-import {RulesDatabase} from "../database";
-import {rulePrompt} from "../events/createRuleHandler";
+import { RulesDatabase } from "../database";
+import { rulePrompt } from "../events/createRuleHandler";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 export const createRule = {
-	data: new SlashCommandBuilder()
-		.setName("create_rule")
-		.setDescription(
-			"Erstellt die Regel! \nWenn du die Regel updates lösche bitte die alte Regel Nachricht"
-		)
-		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
-	async execute(interaction: ChatInputCommandInteraction<CacheType>) {
-		// await interaction.deferReply({ ephemeral: true }
+  data: new SlashCommandPermissionsBuilder()
+    .setName("create_rule")
+    .setDescription(
+      "Erstellt die Regel! \nWenn du die Regel updates lösche bitte die alte Regel Nachricht"
+    )
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+  async execute(interaction: ChatInputCommandInteraction<CacheType>) {
+    // await interaction.deferReply({ ephemeral: true }
 
 		const guild = interaction.guild as Guild;
 

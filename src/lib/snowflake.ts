@@ -73,10 +73,22 @@ class Snowflake {
 
 		this.roles[name] = role;
 	}
+	async getRole(roleId: string) {
+		return this.guild.roles.cache.get(roleId);
+	}
+
+	async getChannel(channelId: string) {
+		return this.guild.channels.cache.get(channelId);
+	}
+
+	getMember(memberId: string) {
+		return this.guild.members.cache.get(memberId);
+	}
 
 	async updateChannel(name: keyof Channels, id: string) {
 		await Database.config.set(name, id);
 		const channel = this.guild.channels.cache.get(id);
+
 
 		if (!channel) {
 			throw new Error(`Channel not found with the id ${id}`);

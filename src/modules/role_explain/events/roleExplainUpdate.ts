@@ -25,10 +25,10 @@ export function roleExplainUpdate() {
 			snowflake.roles.owner?.id,
 		];
 
-		if (!allRoles.every((element) => teamRoles.includes(element))) {
-			console.log(allRoles, teamRoles);
-			return;
-		}
+    if (!allRoles.every((element) => teamRoles.includes(element))) {
+      // console.log(allRoles, teamRoles);
+      return;
+    }
 
 		const messageData = await prisma.roleExplanation.findMany({
 			where: {

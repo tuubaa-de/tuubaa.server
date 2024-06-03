@@ -6,16 +6,14 @@ Backend für den Discord Bot und der Webseite https://tuubaa.de
 - ticket
 - temp voice
 - custom welcome messages
+- und vieles mehr
 
 
 
 # Todo
 - youtube api / news
-- ticket rewrite
-  - permission
-  - log in webseite
 - music 
-  - fix pleassseee
+  - buttons 
 - moderation 
   - permission
     - Rollen Vergabe
@@ -24,7 +22,6 @@ Backend für den Discord Bot und der Webseite https://tuubaa.de
     - kick
     - voicemute
     - warn 3
-    - test wachhund
   - report
       - user 
         - by reaction
@@ -33,24 +30,12 @@ Backend für den Discord Bot und der Webseite https://tuubaa.de
       - tutorial
       - timeout/ban/push to next instance/ ignore for reports
 - filter
-  - bilder wo - antwort
+  - names und bilder
 - commands 
   - false check system
   - isolation system/ permission
 - level 
-  - role by level 
-  - events
-  - (extra xp by tuubaa)
-  - xp by voice channel
-    - NO XP
-      - solo
-      - all mute
-      - full mute
-    - less XP
-  - leaderbot channel 
-  - website
-    - leaderbot
-    - person rank
+  - auswahl bei neuen level 
 
 
 # Contributation

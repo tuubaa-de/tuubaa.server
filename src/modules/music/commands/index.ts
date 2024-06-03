@@ -1,71 +1,75 @@
-import {GuildMember, SlashCommandBuilder} from "discord.js";
-import {SlashInteraction} from "../../../types/commands";
-import {play} from "./play";
-import {skip} from "./skip";
-import {pause} from "./pause";
-import {resume} from "./resume";
-import {queue} from "./queue";
-import {stop} from "./stop";
+import { GuildMember, SlashCommandBuilder } from "discord.js";
+import { SlashInteraction } from "../../../types/commands";
+import { play } from "./play";
+import { skip } from "./skip";
+import { pause } from "./pause";
+import { resume } from "./resume";
+import { queue } from "./queue";
+import { stop } from "./stop";
+import {
+  SlashCommandPermissionType,
+  SlashCommandPermissionsBuilder,
+} from "../../../models/slashCommandBuilder";
 
 export const musicController = {
-	data: new SlashCommandBuilder()
-		.setName("music")
-		.setDescription("Ist der Bot ansprechbar?")
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName("play")
-				.setDescription("Spiele Musik ab")
-				.addStringOption((option) =>
-					option
-						.setName("song")
-						.setDescription("Der Name des Songs")
-						.setRequired(true)
-				)
-				.addStringOption((option) =>
-					option
-						.setName("suchmaschine")
-						.setDescription("Wo soll der Song gesucht werden?")
-						.setRequired(false)
-						.setChoices(
-							{
-								name: "YouTube",
-								value: "youtube",
-							},
-							{
-								name: "Spotify",
-								value: "spotify",
-							},
-							{
-								name: "SoundCloud",
-								value: "soundcloud",
-							}
-						)
-				)
-		)
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName("skip")
-				.setDescription("Überspringe den aktuellen Song")
-		)
-		.addSubcommand((subcommand) =>
-			subcommand.setName("pause").setDescription("Pausiere den aktuellen Song")
-		)
-		.addSubcommand((subcommand) =>
-			subcommand
-				.setName("resume")
-				.setDescription("Setze den aktuellen Song fort")
-		)
-		.addSubcommand((subcommand) =>
-			subcommand.setName("queue").setDescription("Zeige die Warteschlange an")
-		)
-		.addSubcommand((subcommand) =>
-			subcommand.setName("stop").setDescription("Stoppe die Musik")
-		)
-		.addSubcommand((subcommand) =>
-			subcommand.setName("clear").setDescription("Lösche die Warteschlange")
-		),
-	async execute(interaction: SlashInteraction) {
-		await interaction.deferReply({ephemeral: false});
+  data: new SlashCommandPermissionsBuilder()
+    .setName("music")
+    .setDescription("Ist der Bot ansprechbar?")
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("play")
+        .setDescription("Spiele Musik ab")
+        .addStringOption((option) =>
+          option
+            .setName("song")
+            .setDescription("Der Name des Songs")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
+          option
+            .setName("suchmaschine")
+            .setDescription("Wo soll der Song gesucht werden?")
+            .setRequired(false)
+            .setChoices(
+              {
+                name: "YouTube",
+                value: "youtube",
+              },
+              {
+                name: "Spotify",
+                value: "spotify",
+              },
+              {
+                name: "SoundCloud",
+                value: "soundcloud",
+              }
+            )
+        )
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("skip")
+        .setDescription("Überspringe den aktuellen Song")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("pause").setDescription("Pausiere den aktuellen Song")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand
+        .setName("resume")
+        .setDescription("Setze den aktuellen Song fort")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("queue").setDescription("Zeige die Warteschlange an")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("stop").setDescription("Stoppe die Musik")
+    )
+    .addSubcommand((subcommand) =>
+      subcommand.setName("clear").setDescription("Lösche die Warteschlange")
+    ),
+  async execute(interaction: SlashInteraction) {
+    await interaction.deferReply({ ephemeral: false });
 
 		const member = interaction.member as GuildMember;
 

@@ -1,6 +1,7 @@
 import {EmbedBuilder, SlashCommandBuilder} from "discord.js";
 import {SlashInteraction} from "../../../types/commands";
 import axios from "axios";
+import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
 
 const rolePlayData = {
 	pat: {
@@ -174,9 +175,9 @@ const rolePlayData = {
 	},
 };
 
-const command = new SlashCommandBuilder()
-	.setName("rp")
-	.setDescription("Roleplay Befehle");
+const command = new SlashCommandPermissionsBuilder()
+  .setName("rp")
+  .setDescription("Roleplay Befehle");
 
 for (const [key, value] of Object.entries(rolePlayData)) {
 	command.addSubcommand((subcommand) =>
