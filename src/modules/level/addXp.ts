@@ -44,5 +44,4 @@ export async function addXP(user: GuildMember, addedXP: number) {
 		await sendLevelMessage(user, newLevel, newRole);
 	}
 	await LevelDatabase.updateXP(user.id, newXP);
-	console.log(`Added ${addedXP} XP to ${user.displayName} (${user.id})`);
 }
