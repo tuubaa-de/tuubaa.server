@@ -1,4 +1,4 @@
-class Deque<T> {
+export class Deque<T> {
 	private readonly items: T[];
 
 	constructor() {

@@ -1,50 +1,83 @@
-import { Events } from "discord.js";
-import { client } from "../../../bot";
-import { snowflake } from "../../../lib/snowflake";
-import { addXP } from "../addXp";
+import {Events} from "discord.js";
+import {client} from "../../../bot";
+import {addXP} from "../addXp";
+import {levellingConfig} from "../levelHelper";
 
-export async function onVoice() {
-  const currentUserInVoice: { [key: string]: VoiceMode } = {};
-  setInterval(() => {
-    Object.keys(currentUserInVoice).forEach((key) => {
-      const user = snowflake.guild.members.cache.get(key);
-      if (!user) {
-        delete currentUserInVoice[key];
-        return;
-      }
-      if (currentUserInVoice[key] == VoiceMode.FULL) {
-        addXP(user, 2);
-      } else if (currentUserInVoice[key] == VoiceMode.HALF) {
-        addXP(user, 1);
-      }
-    });
-  }, 60 * 1000);
+const currentUserInVoice: { [key: string]: VoiceMode } = {};
+const voiceIntervals: { [key: string]: NodeJS.Timeout } = {};
+const voiceDuration: { [key: string]: number } = {};
 
-  client.on(Events.VoiceStateUpdate, (before, after) => {
-    if (before.member?.user.bot || after.member?.user.bot) {
-      return;
-    }
+/**
+ * Initialize the voice levelling system
+ * Important: Call this function exactly once on bot setup
+ */
+export async function initXPVoiceEvaluator() {
 
-    if (after.channelId == null) {
-      currentUserInVoice[after.id] = VoiceMode.ZERO;
-      return;
-    }
-    if (after.channelId != null) {
-      currentUserInVoice[before.id] = VoiceMode.FULL;
-    }
+	// TODO Persönliche Sprachstrafe bis 2h x1, dann gegen x0 bis 12h
+	// voiceIntervals["minuteInterval"] = setInterval(() => {
+	// 	Object.keys(voiceDuration).forEach(key => {
+	// 		voiceDuration[key] -= (24*60*10);
+	// 	});
+	// }, 10 * 60 * 1000);
 
-    if (after.mute) {
-      currentUserInVoice[after.id] = VoiceMode.HALF;
-    }
+	client.on(Events.VoiceStateUpdate, (before, after) => {
+		const user = before.member || after.member;
 
-    if (after.deaf) {
-      currentUserInVoice[after.id] = VoiceMode.ZERO;
-    }
-  });
+		// If user is not supplied or is a bot, return
+		if (!user) return;
+
+		// If user joined a voice channel
+		if (after.channelId) {
+
+			// Assign mute state
+			if (after.deaf)         currentUserInVoice[user.id] = VoiceMode.ZERO;
+			else if (after.mute)    currentUserInVoice[user.id] = VoiceMode.HALF;
+			else                    currentUserInVoice[user.id] = VoiceMode.FULL;
+
+			// Add interval if not already added
+			if(!voiceIntervals[user.id]) {
+				voiceIntervals[user.id] = setInterval(() => {
+
+					// If user is not in voice, clear and remove interval
+					if (!currentUserInVoice[user.id]) {
+						clearInterval(voiceIntervals[user.id]);
+						delete voiceIntervals[user.id];
+						return;
+					}
+
+					// Add XP based on mute state
+					if (currentUserInVoice[user.id] == VoiceMode.FULL) {
+						addXP(user, levellingConfig.VOICE_UNMUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP);
+					} else if (currentUserInVoice[user.id] == VoiceMode.HALF) {
+						addXP(user, levellingConfig.VOICE_MUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP);
+					} else {
+						addXP(user, levellingConfig.VOICE_DEAF_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP);
+					}
+				}, 60 * 1000);
+			}
+		} else { // If user left a voice channel
+			// Remove interval and delete user from currentUserInVoice
+			delete currentUserInVoice[user.id];
+			if(voiceIntervals[user.id]) {
+				clearInterval(voiceIntervals[user.id]);
+				delete voiceIntervals[user.id];
+			}
+		}
+	});
+}
+
+/**
+ * Deinitialize the voice levelling system
+ * Call this for reinitialization.
+ */
+export function clearVoiceLevelling() {
+	Object.keys(voiceIntervals).forEach(key => {	clearInterval(voiceIntervals[key]);	delete voiceIntervals[key];	});
+	Object.keys(currentUserInVoice).forEach(key => delete currentUserInVoice[key]);
+	Object.keys(voiceDuration).forEach(key => delete voiceDuration[key]);
 }
 
 enum VoiceMode {
-  FULL = "full",
-  HALF = "half",
-  ZERO = "zero",
+	FULL = "full",
+	HALF = "half",
+	ZERO = "zero",
 }
