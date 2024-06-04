@@ -4,7 +4,7 @@ export const levellingConfig = {
 	LEVELLING_FUNCTION_FACTOR: 200,
 	MAX_LEVEL: 100,
 
-	VOICE_PER_MINUTE_BASE_EXP: 55,
+	VOICE_PER_MINUTE_BASE_EXP: 15,
 	VOICE_UNMUTE_MULTIPLIER: 1,
 	VOICE_MUTE_MULTIPLIER: 0.5,
 	VOICE_DEAF_MULTIPLIER: 0,
@@ -13,10 +13,9 @@ export const levellingConfig = {
 	VOICE_FALLOFF_FROM: 1,
 	VOICE_FALLOFF_TO: 0,
 
-	TEXT_PER_MESSAGE_BASE_XP: 55,
-	TEXT_BASE_XP: 33,
+	TEXT_PER_MESSAGE_BASE_XP: 20,
 	TEXT_PER_CHAR_XP: 0.5,
-	TEXT_MAX_LENGTH: 200,
+	TEXT_MAX_LENGTH: 100,
 	TEXT_FUNC_OFFSET_X: 0.6,
 	TEXT_FUNC_OFFSET_Y: 0.25,
 	TEXT_FUNC_CONST_A: 0.5,
@@ -77,7 +76,7 @@ export function evalTextMessage(
 	user_activity_weekly: number
 ): number {
 	const
-		lengthCalculation: number = levellingConfig.TEXT_BASE_XP
+		lengthCalculation: number = levellingConfig.TEXT_PER_MESSAGE_BASE_XP
 			+ levellingConfig.TEXT_PER_CHAR_XP
 			* Math.min(text.content.length, levellingConfig.TEXT_MAX_LENGTH),
 		messageWorthAfterServerActivity: number =

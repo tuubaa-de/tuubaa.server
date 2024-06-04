@@ -1,8 +1,9 @@
-import {Events} from "discord.js";
+import {Events, GuildMember, VoiceBasedChannel, VoiceChannel} from "discord.js";
 import {client} from "../../../bot";
 import {addUserExperience} from "../addUserExperience";
 import {levellingConfig, timeofdayPenalty} from "../levelHelper";
 
+const isUserLonely: { [key: string]: boolean } = {};
 const currentUserInVoice: { [key: string]: VoiceMode } = {};
 const voiceIntervals: { [key: string]: NodeJS.Timeout } = {};
 const voiceDuration: { [key: string]: number } = {};
@@ -18,13 +19,11 @@ export async function initXPVoiceEvaluator() {
 		// If user is not supplied or is a bot, return
 		if (!user) return;
 
-		// If user joined a voice channel
-		if (after.channelId) {
+		if(before.channel) checkChannelLonelyness(before.channel);
+		if(after.channel) checkChannelLonelyness(after.channel);
 
-			// Assign mute state
-			if (after.deaf) currentUserInVoice[user.id] = VoiceMode.ZERO;
-			else if (after.mute) currentUserInVoice[user.id] = VoiceMode.HALF;
-			else currentUserInVoice[user.id] = VoiceMode.FULL;
+		// If user joined a voice channel
+		if (after.channelId && after.channel) {
 
 			// Add interval if not already added
 			if (!voiceIntervals[user.id]) {
@@ -56,6 +55,23 @@ export async function initXPVoiceEvaluator() {
 			}
 		}
 	});
+}
+
+function checkChannelLonelyness(channel: VoiceBasedChannel) {
+	const iterator = channel.members.values();
+	let member: GuildMember;
+	if(channel.members.filter(member => !(member.voice.mute || member.voice.deaf)).size <= 1) {
+		while(member = iterator.next().value) {
+			currentUserInVoice[member.id] = VoiceMode.FULL;
+		}
+	} else {
+		while(member = iterator.next().value) {
+			// Assign mute state
+			if (member.voice.deaf) currentUserInVoice[member.id] = VoiceMode.ZERO;
+			else if (member.voice.mute) currentUserInVoice[member.id] = VoiceMode.HALF;
+			else currentUserInVoice[member.id] = VoiceMode.FULL;
+		}
+	}
 }
 
 /**
