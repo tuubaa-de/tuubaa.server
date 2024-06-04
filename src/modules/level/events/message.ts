@@ -29,8 +29,7 @@ export async function initMessageXPEvaluator() {
 
 		// Clear old timestamps for the server (old = out of window)
 		while (
-			server_timestamps.peekBack() &&
-			(server_timestamps.peekBack() || new Date() /*ugly hack to not-undefine the peeked value*/).getTime() < now.getTime() - anHour
+			server_timestamps.peekBack() && server_timestamps.peekBack()!.getTime() < now.getTime() - anHour
 			) {
 			server_timestamps.popBack();
 		}
@@ -48,7 +47,7 @@ export async function initMessageXPEvaluator() {
 		// Count the number of messages in the last hour
 		let server_activity_hour: number = 0;
 		for (let i = 0; i < server_timestamps.size(); i++) {
-			if (server_timestamps.peekAt(i) && (server_timestamps.peekAt(i) || new Date() /*ugly hack to not-undefine the peeked value*/).getTime() > now.getTime() - anHour) {
+			if (server_timestamps.peekAt(i)!.getTime() > now.getTime() - anHour) {
 				server_activity_hour = i;
 				break;
 			}
@@ -57,10 +56,10 @@ export async function initMessageXPEvaluator() {
 		// Count the number of messages from the user in the last day
 		let user_activity_week: number = 0, user_activity_day: number = 0;
 		for (let i = 0; i < user_timestamps[message.author.id].size(); i++) {
-			if (user_activity_day == 0 && user_timestamps[message.author.id].peekAt(i) && (user_timestamps[message.author.id].peekAt(i) || new Date() /*ugly hack to not-undefine the peeked value*/).getTime() > now.getTime() - aDay) {
+			if (user_activity_day == 0 && user_timestamps[message.author.id].peekAt(i)!.getTime() > now.getTime() - aDay) {
 				user_activity_day = i;
 			}
-			if (user_timestamps[message.author.id].peekAt(i) && (user_timestamps[message.author.id].peekAt(i) || new Date() /*ugly hack to not-undefine the peeked value*/).getTime() > now.getTime() - aWeek) {
+			if (user_timestamps[message.author.id].peekAt(i)!.getTime() > now.getTime() - aWeek) {
 				user_activity_week = i;
 				break;
 			}
