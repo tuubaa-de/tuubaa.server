@@ -1,17 +1,21 @@
-import {CacheType, ChatInputCommandInteraction, SlashCommandSubcommandsOnlyBuilder,} from "discord.js";
-import {SlashCommandPermissionsBuilder} from "../models/slashCommandBuilder";
+import {
+  CacheType,
+  ChatInputCommandInteraction,
+  SlashCommandSubcommandsOnlyBuilder,
+} from "discord.js";
+import { SlashCommandPermissionsBuilder } from "../models/slashCommandBuilder";
 
 export type Commands = {
-	data:
-		| SlashCommandPermissionsBuilder
-		| Omit<
-		SlashCommandPermissionsBuilder,
-		"addSubcommand" | "addSubcommandGroup"
-	>
-		| SlashCommandSubcommandsOnlyBuilder;
-	execute: (
-		interaction: ChatInputCommandInteraction<CacheType> | SlashInteraction
-	) => Promise<void>;
+  data:
+    | SlashCommandPermissionsBuilder
+    | SlashCommandSubcommandsOnlyBuilder
+    | Omit<
+        SlashCommandPermissionsBuilder,
+        "addSubcommand" | "addSubcommandGroup"
+      >;
+  execute: (
+    interaction: ChatInputCommandInteraction<CacheType> | SlashInteraction
+  ) => Promise<void>;
 };
 
 export type SlashInteraction = ChatInputCommandInteraction<CacheType>;
