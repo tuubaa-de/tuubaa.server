@@ -35,34 +35,34 @@ export const levellingConfig = {
 
 /**
  * Calculate the level of a user based on their XP
- * @param xp the XP of the user
+ * @param user_experience the XP of the user
  */
-export function calcLevel(xp: number): number {
-	return xp < 0 ? 0 :
+export function calcLevel(user_experience: number): number {
+	return user_experience < 0 ? 0 :
 		Math.min(
 			Math.floor(
 				Math.sqrt(
-					xp / levellingConfig.LEVELLING_FUNCTION_FACTOR)),
+					user_experience / levellingConfig.LEVELLING_FUNCTION_FACTOR)),
 			levellingConfig.MAX_LEVEL);
 }
 
 /**
  * Calculate the XP required to reach the next level
- * @param xp the XP of the user
+ * @param user_experience the XP of the user
  */
-export function xpToNextLevel(xp: number): number {
-	return xp < 0 ? levellingConfig.LEVELLING_FUNCTION_FACTOR :
-		levellingConfig.LEVELLING_FUNCTION_FACTOR * Math.pow(calcLevel(xp) + 1, 2) - xp;
+export function xpToNextLevel(user_experience: number): number {
+	return user_experience < 0 ? levellingConfig.LEVELLING_FUNCTION_FACTOR :
+		levellingConfig.LEVELLING_FUNCTION_FACTOR * Math.pow(calcLevel(user_experience) + 1, 2) - user_experience;
 }
 
-export function xpFromThisLevel(xp: number): number {
-	return xp < 0 ? 0 :
-		levellingConfig.LEVELLING_FUNCTION_FACTOR * Math.pow(calcLevel(xp), 2);
+export function xpFromThisLevel(user_experience: number): number {
+	return user_experience < 0 ? 0 :
+		user_experience - levellingConfig.LEVELLING_FUNCTION_FACTOR * Math.pow(calcLevel(user_experience), 2);
 }
 
 
 /**
- * Evaluate the XP of a message, considering the current activity, both server and user
+ * Evaluate the user experience gained from a message, considering the current activity, both server and user
  * @param text the message to evaluate
  * @param daytime the time of day, from 0 to 1440 minutes (24h * 60m)
  * @param server_activity number of messages on the server in the last HOUR
