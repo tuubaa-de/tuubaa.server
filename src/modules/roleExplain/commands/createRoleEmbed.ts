@@ -11,6 +11,7 @@ export const createRoleEmbed = {
     .setDescription("Erstelle eine Embed Nachricht, die die Rollen erklärt.")
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   async execute(interaction: SlashInteraction) {
+    await interaction.deferReply({ ephemeral: true });
     const embed = await buildRoleEmbed();
 
     const message = await interaction.channel?.send({ embeds: [embed] });

@@ -23,10 +23,11 @@ async function entry() {
   snowflake.updateRole("artist", "1188103824028737546");
 
   snowflake.updateRole("levellingRole6", "1090728365490720799");
-  snowflake.updateRole("levellingRole5", "1090728235765084183");
-  snowflake.updateRole("levellingRole4", "1090728047721844796");
-  snowflake.updateRole("levellingRole3", "1245722673984704542");
-  snowflake.updateRole("levellingRole2", "1009762884626169947");
+  snowflake.updateRole("levellingRole5", "1247254976888307763");
+  snowflake.updateRole("levellingRole4", "1090728235765084183");
+  snowflake.updateRole("levellingRole3", "1090728047721844796");
+  snowflake.updateRole("levellingRole2", "1245722673984704542");
+  snowflake.updateRole("levellingRole1", "1009762884626169947");
 
   snowflake.updateRole("teamSplitter", "1237533652292997191");
   snowflake.updateRole("specialSplitter", "1237536627182665871");

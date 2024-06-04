@@ -29,10 +29,10 @@ async function entry() {
 
   client.player.on("trackEnd", async (player, track) => {
     if (player.queue.size === 0) {
-      console.log("queue");
+      // console.log("queue");
       setTimeout(async () => {
-        console.log(player.queue.size);
-        console.log(player.current);
+        // console.log(player.queue.size);
+        // console.log(player.current);
         if (player.queue.size === 0 && !player.current) {
           await player.destroy();
         }

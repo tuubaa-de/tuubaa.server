@@ -75,22 +75,26 @@ export async function buildRoleEmbed() {
     "gehört denen die **Lvl 100** erreicht haben, ihr habt nun den Schlüssel vom Van HGW";
   const beifahrerMembers = getMember(beifahrer);
 
-  const mitentfuehrer = snowflake.roles.levellingRole5;
+  const meisterMitentfuehrer = snowflake.roles.levellingRole5;
+  const meisterMitentfuehrerText =
+    "gehört denen die **Lvl 80** erreicht haben, ihr seid die wahren Meister des Kidnapping";
+
+  const mitentfuehrer = snowflake.roles.levellingRole4;
   const mitentfuehrerText =
-    "gehört denen die **Lvl 75** erreicht haben, weiter so ihr unterstützt mein Kidnapping";
+    "gehört denen die **Lvl 60** erreicht haben, weiter so ihr unterstützt mein Kidnapping";
   const mitentfuehrerMembers = getMember(mitentfuehrer);
 
-  const schuldig = snowflake.roles.levellingRole4;
+  const schuldig = snowflake.roles.levellingRole3;
   const schuldigText =
-    "gehört denen die **Lvl 50** erreicht haben, du hast zu viel gesehen...Im Sorry";
+    "gehört denen die **Lvl 40** erreicht haben, du hast zu viel gesehen...Im Sorry";
   const schuldigMembers = getMember(schuldig);
 
-  const verdaechtig = snowflake.roles.levellingRole3;
+  const verdaechtig = snowflake.roles.levellingRole2;
   const verdaechtigText =
-    "gehört denen die **lvl 25** erreicht haben, dein Verhalten ist sehr..speziell geworden..";
+    "gehört denen die **lvl 20** erreicht haben, dein Verhalten ist sehr..speziell geworden..";
   const verdaechtigMembers = getMember(verdaechtig);
 
-  const unschuldig = snowflake.roles.levellingRole2;
+  const unschuldig = snowflake.roles.levellingRole1;
   const unschuldigText =
     "gehört **Allen**, du bist noch neu und so unschuldig hihhihii..";
   const unschuldigMembers = getMember(unschuldig);
@@ -136,6 +140,9 @@ export async function buildRoleEmbed() {
   const level = `
   ${pink}${beifahrer}
   > ${beifahrerText}
+
+  ${pink}${meisterMitentfuehrer}
+  > ${meisterMitentfuehrerText}
 
   ${pink}${mitentfuehrer}
   > ${mitentfuehrerText}

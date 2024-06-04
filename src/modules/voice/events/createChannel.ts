@@ -53,7 +53,7 @@ export async function createVoice() {
       return;
     }
 
-    console.log(interaction.customId);
+    // console.log(interaction.customId);
 
     if (!["voice-access", "voice-deny"].includes(interaction.customId)) return;
     await interaction.deferReply({ ephemeral: true });
