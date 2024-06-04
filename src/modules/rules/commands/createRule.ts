@@ -27,7 +27,8 @@ export const createRule = {
       ) as TextBasedChannel;
 
       if (oldRuleMessage && channel) {
-        const message = await channel.messages.fetch(oldRuleMessage.message);
+        await channel.messages.fetch();
+        const message = channel.messages.cache.get(oldRuleMessage.message);
         if (message) {
           await message.delete();
         }

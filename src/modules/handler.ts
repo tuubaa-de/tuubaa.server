@@ -13,7 +13,7 @@ import { music } from "./music";
 import { welcome } from "./welcome";
 import { ticket } from "./ticket";
 import { logs } from "./logs";
-import { roleExplain } from "./role_explain";
+import { roleExplain } from "./roleExplain";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { rules } from "./rules";
 import { moderation } from "./moderation";
@@ -84,10 +84,13 @@ class ModuleManager {
         return;
       }
 
-      if (interaction.channelId !== snowflake.channels.bot?.id) {
-        await interaction.deferReply({ ephemeral: true });
-      } else {
-        await interaction.deferReply({ ephemeral: false });
+      // TODO: import data from SlashCommandPermissionsBuilder
+      if (!["create_rule", "rp"].includes(command.data.name)) {
+        if (interaction.channelId !== snowflake.channels.bot?.id) {
+          await interaction.deferReply({ ephemeral: true });
+        } else {
+          await interaction.deferReply({ ephemeral: false });
+        }
       }
 
       try {

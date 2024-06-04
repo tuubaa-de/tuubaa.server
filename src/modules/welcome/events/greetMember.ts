@@ -14,6 +14,11 @@ export async function greetMember() {
     // 	await member.roles.add(snowflake.roles.teamSplitter);
     // }
 
+    if (member.user.bot) {
+      allCount--;
+      continue;
+    }
+
     count++;
     allCount--;
 
@@ -44,7 +49,6 @@ export async function greetMember() {
     ) {
       await member.roles.add(snowflake.roles.user);
     }
-    console.log(`${count} / ${allCount}: `, member.displayName);
   }
 
   client.on(Events.GuildMemberAdd, async (member) => {
