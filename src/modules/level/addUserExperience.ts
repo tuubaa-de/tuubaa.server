@@ -7,12 +7,12 @@ import {calcLevel, xpToNextLevel} from "./levelHelper";
 /**
  * Add XP to a user and update their level if they have levelled up
  * @param user the user to add XP to
- * @param addedXP the amount of XP to add, must be greater than 0
+ * @param addedExperience the amount of XP to add, must be greater than 0
  */
-export async function addXP(user: GuildMember, addedXP: number) {
-	if (!user || addedXP <= 0) return;
+export async function addUserExperience(user: GuildMember, addedExperience: number) {
+	if (!user || addedExperience <= 0) return;
 
-	addedXP = Math.floor(addedXP);
+	addedExperience = Math.floor(addedExperience);
 
 	const levelRole: { [level: number]: Role | null } = {
 		0: snowflake.roles.levellingRole1,
@@ -27,11 +27,11 @@ export async function addXP(user: GuildMember, addedXP: number) {
 
 	const previousXP = levelData?.dezixp || 0;
 	const previousLevel = calcLevel(previousXP);
-	const newXP = previousXP + addedXP;
+	const newXP = previousXP + addedExperience;
 	const newLevel = calcLevel(newXP);
 	const levelUpXP = xpToNextLevel(previousXP);
 
-	if (addedXP >= levelUpXP) {
+	if (addedExperience >= levelUpXP) {
 		const newRole = levelRole[newLevel];
 		if (newRole) {
 			for (const role of Object.values(levelRole)) {

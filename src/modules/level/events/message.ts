@@ -1,7 +1,7 @@
 import {Events} from "discord.js";
 import {client} from "../../../bot";
 import {sleep} from "../../../lib/utils";
-import {addXP} from "../addXp";
+import {addUserExperience} from "../addUserExperience";
 import {evalTextMessage} from "../levelHelper";
 import {Deque} from "../deque";
 
@@ -70,7 +70,7 @@ export async function initMessageXPEvaluator() {
 		// Add XP based on evaluation
 		// daytime is the current time of day in minutes
 		const daytime = new Date().getHours() * 60 + new Date().getMinutes();
-		await addXP(message.member, evalTextMessage(message, daytime, server_activity_hour, user_activity_day, user_activity_week));
+		await addUserExperience(message.member, evalTextMessage(message, daytime, server_activity_hour, user_activity_day, user_activity_week));
 
 		// Wait for cooldown
 		await sleep(10000);

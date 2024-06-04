@@ -1,6 +1,6 @@
 import {Events} from "discord.js";
 import {client} from "../../../bot";
-import {addXP} from "../addXp";
+import {addUserExperience} from "../addUserExperience";
 import {levellingConfig, timeofdayPenalty} from "../levelHelper";
 
 const currentUserInVoice: { [key: string]: VoiceMode } = {};
@@ -39,11 +39,11 @@ export async function initXPVoiceEvaluator() {
 					const timeofday: number = new Date().getHours() * 60 + new Date().getMinutes();
 					// Add XP based on mute state
 					if (currentUserInVoice[user.id] == VoiceMode.FULL) {
-						addXP(user, levellingConfig.VOICE_UNMUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
+						addUserExperience(user, levellingConfig.VOICE_UNMUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
 					} else if (currentUserInVoice[user.id] == VoiceMode.HALF) {
-						addXP(user, levellingConfig.VOICE_MUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
+						addUserExperience(user, levellingConfig.VOICE_MUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
 					} else {
-						addXP(user, levellingConfig.VOICE_DEAF_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
+						addUserExperience(user, levellingConfig.VOICE_DEAF_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
 					}
 				}, 60 * 1000);
 			}
