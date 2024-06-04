@@ -85,13 +85,6 @@ class ModuleManager {
       }
 
       // TODO: import data from SlashCommandPermissionsBuilder
-      if (!["create_rule", "rp"].includes(command.data.name)) {
-        if (interaction.channelId !== snowflake.channels.bot?.id) {
-          await interaction.deferReply({ ephemeral: true });
-        } else {
-          await interaction.deferReply({ ephemeral: false });
-        }
-      }
 
       try {
         await command.execute(interaction);

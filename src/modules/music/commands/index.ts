@@ -7,6 +7,7 @@ import { resume } from "./resume";
 import { queue } from "./queue";
 import { stop } from "./stop";
 import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
+import { snowflake } from "../../../lib/snowflake";
 
 export const musicController = {
   data: new SlashCommandPermissionsBuilder()
@@ -66,6 +67,12 @@ export const musicController = {
       subcommand.setName("clear").setDescription("Lösche die Warteschlange")
     ),
   async execute(interaction: SlashInteraction) {
+    if (interaction.channelId !== snowflake.channels.bot?.id) {
+      await interaction.deferReply({ ephemeral: true });
+    } else {
+      await interaction.deferReply({ ephemeral: false });
+    }
+
     const member = interaction.member as GuildMember;
 
     switch (interaction.options.getSubcommand()) {

@@ -195,6 +195,7 @@ for (const [key, value] of Object.entries(rolePlayData)) {
 export const rolePlay = {
   data: command,
   async execute(interaction: SlashInteraction) {
+    await interaction.deferReply({ ephemeral: false });
     const user1 = interaction.user;
     const user2 = interaction.options.getUser("user");
 

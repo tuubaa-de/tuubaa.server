@@ -9,6 +9,7 @@ import { LevelDatabase } from "../database";
 import { RankCard } from "rankcard";
 import { calcLevel, xpFromThisLevel, xpToNextLevel } from "../levelHelper";
 import { SlashCommandPermissionsBuilder } from "../../../models/slashCommandBuilder";
+import { snowflake } from "../../../lib/snowflake";
 
 export const myLevel = {
   data: new SlashCommandPermissionsBuilder()
@@ -20,6 +21,12 @@ export const myLevel = {
         .setDescription("Der Benutzer, dessen Level angezeigt werden soll.")
     ),
   async execute(interaction: SlashInteraction) {
+    if (interaction.channelId !== snowflake.channels.bot?.id) {
+      await interaction.deferReply({ ephemeral: true });
+    } else {
+      await interaction.deferReply({ ephemeral: false });
+    }
+
     let user = interaction.options.getUser("user");
 
     if (!user) {
