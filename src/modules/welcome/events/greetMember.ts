@@ -48,6 +48,7 @@ export async function greetMember() {
       !member.roles.cache.get(snowflake.roles.levellingRole1?.id)
     ) {
       await member.roles.add(snowflake.roles.levellingRole1);
+      console.log(`${count}/${allCount} >> ${member.user.username}`);
     }
   }
 
