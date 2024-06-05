@@ -13,7 +13,7 @@ async function entry() {
 
   snowflake.updateRole("user", "1009762884626169947");
   snowflake.updateRole("ban", "1183177169120268328");
-  snowflake.updateRole("team", "1237533652292997191");
+  snowflake.updateRole("team", "1092209824508411914");
 
   snowflake.updateRole("admin", "1139287301848043632");
 
