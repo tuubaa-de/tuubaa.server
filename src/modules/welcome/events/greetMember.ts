@@ -68,8 +68,8 @@ export async function greetMember() {
       await member.roles.add(snowflake.roles.pingsSplitter);
     }
 
-    if (snowflake.roles.user) {
-      await member.roles.add(snowflake.roles.user);
+    if (snowflake.roles.levellingRole1) {
+      await member.roles.add(snowflake.roles.levellingRole1.id);
     }
 
     await snowflake.channels.general?.send(
