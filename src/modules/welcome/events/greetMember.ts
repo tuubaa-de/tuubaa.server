@@ -44,10 +44,10 @@ export async function greetMember() {
     }
 
     if (
-      snowflake.roles.user &&
-      !member.roles.cache.get(snowflake.roles.user?.id)
+      snowflake.roles.levellingRole1 &&
+      !member.roles.cache.get(snowflake.roles.levellingRole1?.id)
     ) {
-      await member.roles.add(snowflake.roles.user);
+      await member.roles.add(snowflake.roles.levellingRole1);
     }
   }
 
