@@ -11,6 +11,12 @@ async function entry() {
   snowflake.updateMember("time", "795306274467348510");
   snowflake.updateMember("tuubaa", "624623721587408896");
 
+  snowflake.updateRole("user", "1009762884626169947");
+  snowflake.updateRole("ban", "1183177169120268328");
+  snowflake.updateRole("team", "1092209824508411914");
+
+  snowflake.updateRole("admin", "1139287301848043632");
+
   snowflake.updateRole("owner", "1009763136586387467");
   snowflake.updateRole("dev", "1009767438071648296");
   snowflake.updateRole("manager", "1224092798924492921");

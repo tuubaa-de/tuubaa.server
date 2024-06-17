@@ -44,10 +44,11 @@ export async function greetMember() {
     }
 
     if (
-      snowflake.roles.user &&
-      !member.roles.cache.get(snowflake.roles.user?.id)
+      snowflake.roles.levellingRole1 &&
+      !member.roles.cache.get(snowflake.roles.levellingRole1?.id)
     ) {
-      await member.roles.add(snowflake.roles.user);
+      await member.roles.add(snowflake.roles.levellingRole1);
+      console.log(`${count}/${allCount} >> ${member.user.username}`);
     }
   }
 
@@ -68,8 +69,8 @@ export async function greetMember() {
       await member.roles.add(snowflake.roles.pingsSplitter);
     }
 
-    if (snowflake.roles.user) {
-      await member.roles.add(snowflake.roles.user);
+    if (snowflake.roles.levellingRole1) {
+      await member.roles.add(snowflake.roles.levellingRole1.id);
     }
 
     await snowflake.channels.general?.send(
