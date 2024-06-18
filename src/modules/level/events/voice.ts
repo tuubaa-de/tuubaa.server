@@ -37,13 +37,15 @@ export async function initXPVoiceEvaluator() {
 					}
 					const timeofday: number = new Date().getHours() * 60 + new Date().getMinutes();
 					// Add XP based on mute state
+					let exp;
 					if (currentUserInVoice[user.id] == VoiceMode.FULL) {
-						addUserExperience(user, levellingConfig.VOICE_UNMUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
+						exp = levellingConfig.VOICE_UNMUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1);
 					} else if (currentUserInVoice[user.id] == VoiceMode.HALF) {
-						addUserExperience(user, levellingConfig.VOICE_MUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
+						exp = levellingConfig.VOICE_MUTE_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1);
 					} else {
-						addUserExperience(user, levellingConfig.VOICE_DEAF_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1));
+						exp = levellingConfig.VOICE_DEAF_MULTIPLIER * levellingConfig.VOICE_PER_MINUTE_BASE_EXP * (timeofdayPenalty(timeofday) ? 0 : 1);
 					}
+					addUserExperience(user, exp);
 				}, 60 * 1000);
 			}
 		} else { // If user left a voice channel
@@ -62,7 +64,7 @@ function checkChannelLonelyness(channel: VoiceBasedChannel) {
 	let member: GuildMember;
 	if(channel.members.filter(member => !(member.voice.mute || member.voice.deaf)).size <= 1) {
 		while(member = iterator.next().value) {
-			currentUserInVoice[member.id] = VoiceMode.FULL;
+			currentUserInVoice[member.id] = VoiceMode.ZERO;
 		}
 	} else {
 		while(member = iterator.next().value) {
