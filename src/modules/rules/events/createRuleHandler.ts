@@ -1,70 +1,70 @@
 import {
-  ActionRowBuilder,
-  ButtonStyle,
-  CacheType,
-  Colors,
-  EmbedBuilder,
-  Events,
-  Guild,
-  Interaction,
-  ModalBuilder,
-  PermissionFlagsBits,
-  TextInputBuilder,
-  TextInputStyle,
+	ActionRowBuilder,
+	ButtonStyle,
+	CacheType,
+	Colors,
+	EmbedBuilder,
+	Events,
+	Guild,
+	Interaction,
+	ModalBuilder,
+	PermissionFlagsBits,
+	TextInputBuilder,
+	TextInputStyle,
 } from "discord.js";
-import { RulesDatabase } from "../database";
-import { succesEmbed } from "../../../lib/embed";
-import { snowflake } from "../../../lib/snowflake";
-import { client } from "../../../bot";
+import {RulesDatabase} from "../database";
+import {succesEmbed} from "../../../lib/embed";
+import {snowflake} from "../../../lib/snowflake";
+import {client} from "../../../bot";
 
 export function onModalSubmit() {
-  client.on(
-    Events.InteractionCreate,
-    async (interaction: Interaction<CacheType>) => {
-      if (!interaction.isModalSubmit() || !interaction.channel) return;
+	client.on(
+		Events.InteractionCreate,
+		async (interaction: Interaction<CacheType>) => {
+			if (!interaction.isModalSubmit() || !interaction.channel) return;
 
-      if (interaction.customId != "rules_modal") return;
+			if (interaction.customId != "rules_modal") return;
 
-      const guild = interaction.guild as Guild;
+			const guild = interaction.guild as Guild;
 
-      const text = interaction.fields.getTextInputValue("rules_text_input");
+			const text = interaction.fields.getTextInputValue("rules_text_input");
 
-      const newRules = await interaction.channel.send({
-        embeds: [await ruleEmbed(text)],
-      });
+			const newRules = await interaction.channel.send({
+				embeds: [await ruleEmbed(text)],
+			});
 
-      if (!newRules) return;
+			if (!newRules) return;
 
-      await RulesDatabase.set(guild, newRules.id, interaction.channel.id);
+			await RulesDatabase.set(guild, newRules.id, interaction.channel.id);
 
-      await interaction.editReply({
-        embeds: [succesEmbed("Erfolgreich die Regel erstellt!")],
-      });
-    }
-  );
+			await interaction.editReply({
+				embeds: [succesEmbed("Erfolgreich die Regel erstellt!")],
+			});
+		}
+	);
 }
 
 export function rulePrompt() {
-  const modal = new ModalBuilder()
-    .setCustomId("rules_modal")
-    .setTitle("Rules Builder");
+	const modal = new ModalBuilder()
+		.setCustomId("rules_modal")
+		.setTitle("Rules Builder");
 
-  const textInput = new TextInputBuilder()
-    .setCustomId("rules_text_input")
-    .setLabel("Gib den Rules Text ein")
-    .setStyle(TextInputStyle.Paragraph)
-    .setPlaceholder(
-      "$1 Abboniere Tuba\n$2 Der Spurenassistens ist der beste Bot\n$3 Time ist der beste Dev ^^"
-    )
-    // .setValue()
-    .setRequired(false)
-    .setMaxLength(4000);
+	const textInput = new TextInputBuilder()
+		.setCustomId("rules_text_input")
+		.setLabel("Gib den Rules Text ein")
+		.setStyle(TextInputStyle.Paragraph)
+		.setPlaceholder(
+			"$1 Abboniere Tuba\n$2 Der Spurenassistens ist der beste Bot\n$3 Time ist der beste Dev ^^"
+		)
+		// .setValue()
+		.setRequired(false)
+		.setMaxLength(4000);
 
-  modal.addComponents(
-    new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
-  );
+	modal.addComponents(
+		new ActionRowBuilder<TextInputBuilder>().addComponents(textInput)
+	);
 
-  return modal;
+	return modal;
 }
 
 const default_text = `
@@ -92,15 +92,15 @@ Nutzern, dazu zählt das Unterlassen von provokativen, rassistischen und sexisti
 `;
 
 export async function ruleEmbed(text: string | null = null) {
-  const rules = text?.replace(/(§\d+)/g, "**$1**") || default_text;
+	const rules = text?.replace(/(§\d+)/g, "**$1**") || default_text;
 
-  return new EmbedBuilder()
+	return new EmbedBuilder()
 
-    .setTitle("Regelwerk")
-    .setColor(Colors.DarkRed)
-    .setDescription(rules)
-    .setFooter({
-      text: snowflake.members.tuubaa?.displayName || "tuubaa",
-      iconURL: snowflake.members.tuubaa?.displayAvatarURL() || "",
-    });
+		.setTitle("Regelwerk")
+		.setColor(Colors.DarkRed)
+		.setDescription(rules)
+		.setFooter({
+			text: snowflake.members.tuubaa?.displayName || "tuubaa",
+			iconURL: snowflake.members.tuubaa?.displayAvatarURL() || "",
+		});
 }

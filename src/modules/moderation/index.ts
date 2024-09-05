@@ -1,12 +1,11 @@
-import { Module } from "../../types/module";
-import { moderationCommand } from "./commands";
+import {Module} from "../../types/module";
 
 async function entry() {
-  console.log(">> Moderation Module loaded");
+	console.log(">> Moderation Module loaded");
 }
 
 export const moderation = new Module({
-  name: "moderation",
-  entry: entry,
-  commands: [],
+	name: "moderation",
+	entry: entry,
+	commands: [],
 });

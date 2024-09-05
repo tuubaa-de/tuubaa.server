@@ -6,7 +6,6 @@ import {createHTTPHandler} from "@trpc/server/adapters/standalone";
 import {utilsRouter} from "./modules/utils";
 import {readyRouter} from "./modules/ready";
 import {createServer} from "http";
-import {calcLevel} from "./modules/level/levelHelper";
 
 var command_args = process.argv;
 
