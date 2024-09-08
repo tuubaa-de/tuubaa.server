@@ -13,7 +13,6 @@ import { z } from "zod";
 
 const Roles = z.object({
   user: z.custom<Role>().nullable(),
-  ban: z.custom<Role>().nullable(),
   mute: z.custom<Role>().nullable(),
   team: z.custom<Role>().nullable(),
 
@@ -37,10 +36,6 @@ const Roles = z.object({
   levellingRole5: z.custom<Role>().nullable(),
   levellingRole6: z.custom<Role>().nullable(),
 
-  teamSplitter: z.custom<Role>().nullable(),
-  specialSplitter: z.custom<Role>().nullable(),
-  personalySplitter: z.custom<Role>().nullable(),
-  pingsSplitter: z.custom<Role>().nullable(),
 });
 
 const Channels = z.object({
@@ -80,7 +75,7 @@ class Snowflake {
     const role = this.guild.roles.cache.get(id);
 
     if (!role) {
-      throw new Error(`Role not found with the id ${id}`);
+      throw new Error(`Role not found with the id ${name} ${id}`);
     }
 
     this.roles[name] = role;
@@ -103,7 +98,7 @@ class Snowflake {
     const channel = this.guild.channels.cache.get(id);
 
     if (!channel) {
-      throw new Error(`Channel not found with the id ${id}`);
+      // throw new Error(`Channel not found with the id ${name} ${id}`);
     }
 
     this.channels[name] = channel as TextChannel;

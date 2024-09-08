@@ -6,7 +6,7 @@ export class ClientWrapper extends Client {
   player: MoonlinkManager = new MoonlinkManager(
     [
       {
-        host: "tuubaa.de",
+        host: "127.0.0.1",
         port: 2333,
         secure: false,
         password: process.env["LAVALINK_PASSWORD"]!,

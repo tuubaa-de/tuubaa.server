@@ -12,14 +12,13 @@ async function entry() {
   snowflake.updateMember("tuubaa", "624623721587408896");
 
   snowflake.updateRole("user", "1009762884626169947");
-  snowflake.updateRole("ban", "1183177169120268328");
   snowflake.updateRole("team", "1092209824508411914");
 
   snowflake.updateRole("admin", "1139287301848043632");
 
   snowflake.updateRole("owner", "1009763136586387467");
   snowflake.updateRole("dev", "1009767438071648296");
-  snowflake.updateRole("manager", "1224092798924492921");
+  snowflake.updateRole("manager", "1265714468684304436");
   snowflake.updateRole("mod", "1009767209259765912");
   snowflake.updateRole("emotes", "1221458480091893892");
 
@@ -34,11 +33,6 @@ async function entry() {
   snowflake.updateRole("levellingRole3", "1090728047721844796");
   snowflake.updateRole("levellingRole2", "1245722673984704542");
   snowflake.updateRole("levellingRole1", "1009762884626169947");
-
-  snowflake.updateRole("teamSplitter", "1237533652292997191");
-  snowflake.updateRole("specialSplitter", "1237536627182665871");
-  snowflake.updateRole("personalySplitter", "1237534924354093057");
-  snowflake.updateRole("pingsSplitter", "1246958218823864332");
 
   snowflake.updateChannel("memberCount", "1091828921089130608");
   snowflake.updateChannel("general", "1009764889641897985");

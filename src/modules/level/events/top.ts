@@ -3,6 +3,7 @@ import {
   ButtonBuilder,
   ButtonStyle,
   Events,
+  TextChannel
 } from "discord.js";
 import { client } from "../../../bot";
 import { topBuilder } from "..";
@@ -34,18 +35,22 @@ export async function topInteration() {
         .setDisabled(true)
     );
 
-    await interaction.message.edit({
-      components: [actionRow],
-    });
-    // await interaction.deferUpdate();
+
+    //const channel = await client.channels.fetch(interaction.message.channelId) as TextChannel;
+    //const message = await channel!.messages.fetch(interaction.message.id);
+
+    //await interaction.update({
+    //  components: [actionRow],
+    //});
 
     const topData = await topBuilder(parseInt(data[1]), interaction);
 
-    await interaction.message.edit({
+    await interaction.update({
       embeds: [topData.embed],
       files: [topData.attachment],
       components: [topData.actionRow],
     });
+
   });
 
   // await interaction.update({

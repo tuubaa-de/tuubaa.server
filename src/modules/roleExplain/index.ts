@@ -18,13 +18,11 @@ export const roleExplain = new Module({
 });
 
 export async function buildRoleEmbed() {
-  const purple = ":purple:";
-  const blue = ":blue:";
-  const yellow = ":yellow:";
-  const green = ":green:";
-  const pink = ":pink:";
-
-  
+  const purple = "<:purple:1258132946091638794>";
+  const blue = "<:blue:1258132954182586571>";
+  const yellow = "<:yellow:1258132952387420272>";
+  const green = "<:green:1258132948046184628>";
+  const pink = "<:pink:1258132950554513419>";
 
   const getMember = (role: Role | null) => {
     return role?.members.map((member) => `- ${member}`).join("\n");
@@ -109,10 +107,6 @@ export async function buildRoleEmbed() {
   ${blue}${dev}
   > ${devText}
   ${devMembers}
-
-  ${yellow}${manager}
-  > ${managerText}
-  ${managerMembers}
 
   ${green}${mod}
   > ${modText}

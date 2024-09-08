@@ -23,27 +23,6 @@ export async function greetMember() {
     allCount--;
 
     if (
-      snowflake.roles.specialSplitter &&
-      !member.roles.cache.get(snowflake.roles.specialSplitter?.id)
-    ) {
-      await member.roles.add(snowflake.roles.specialSplitter);
-    }
-
-    if (
-      snowflake.roles.personalySplitter &&
-      !member.roles.cache.get(snowflake.roles.personalySplitter?.id)
-    ) {
-      await member.roles.add(snowflake.roles.personalySplitter);
-    }
-
-    if (
-      snowflake.roles.pingsSplitter &&
-      !member.roles.cache.get(snowflake.roles.pingsSplitter?.id)
-    ) {
-      await member.roles.add(snowflake.roles.pingsSplitter);
-    }
-
-    if (
       snowflake.roles.levellingRole1 &&
       !member.roles.cache.get(snowflake.roles.levellingRole1?.id)
     ) {
@@ -56,18 +35,6 @@ export async function greetMember() {
     // if (snowflake.roles.teamSplitter) {
     // 	await member.roles.add(snowflake.roles.teamSplitter);
     // }
-
-    if (snowflake.roles.specialSplitter) {
-      await member.roles.add(snowflake.roles.specialSplitter);
-    }
-
-    if (snowflake.roles.personalySplitter) {
-      await member.roles.add(snowflake.roles.personalySplitter);
-    }
-
-    if (snowflake.roles.pingsSplitter) {
-      await member.roles.add(snowflake.roles.pingsSplitter);
-    }
 
     if (snowflake.roles.levellingRole1) {
       await member.roles.add(snowflake.roles.levellingRole1.id);
