@@ -62,7 +62,7 @@ export async function initXPVoiceEvaluator() {
 function checkChannelLonelyness(channel: VoiceBasedChannel) {
 	const iterator = channel.members.values();
 	let member: GuildMember;
-	if(channel.members.filter(member => !(member.voice.mute || member.voice.deaf)).size <= 1) {
+	if(channel.members.filter(member => !(member.voice.mute || member.voice.deaf || member.user.bot)).size <= 1) {
 		while(member = iterator.next().value) {
 			currentUserInVoice[member.id] = VoiceMode.ZERO;
 		}
