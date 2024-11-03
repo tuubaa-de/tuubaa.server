@@ -9,7 +9,7 @@ export async function testing() {
     // returnbug
     const newVideo = ["video", "neues", "wann"];
 
-    if (newVideo.every(item => message.content.includes(item))) {
+    if (newVideo.every(item => message.content.toLowerCase().includes(item))) {
       await message.reply("https://youtu.be/4btyXfex_8w");
     }
 
