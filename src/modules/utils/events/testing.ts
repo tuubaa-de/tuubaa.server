@@ -7,6 +7,12 @@ import { prisma } from "../../../lib/database";
 export async function testing() {
   client.on(Events.MessageCreate, async (message) => {
     // returnbug
+    const newVideo = ["video", "neues", "wann"];
+
+    if (newVideo.every(item => message.content.includes(item))) {
+      await message.reply("https://youtu.be/4btyXfex_8w");
+    }
+
     if (
       !message.content.startsWith("!") ||
       message.author.id !== snowflake.members.time?.id
