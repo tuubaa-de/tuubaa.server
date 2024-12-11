@@ -51,21 +51,35 @@ export const myLevel = {
 
     const progress = (currentXp / requiredXp) * 100;
 
-    const card = new RankCard()
-      .setName(`${user.displayName}`)
-      .setLevel(`Level ${level}`)
-      .setColor("auto")
-      .setBrightness(69)
-      .setAvatar(user.avatarURL()!)
-      .setProgress(progress)
-      .setRank(index.toString())
-      .setCurrentXp(`${Math.floor(currentXp / 10)}`)
-      .setRequiredXp(`${Math.floor(requiredXp / 10)}`)
-      .setShowXp(true);
+    const card = await RankCard({
+      name: user.displayName,
+      level: `Level ${level}`,
+      color: "auto",
+      brightness: "69",
+      avatar: user.avatarURL()!,
+      progress: String(progress),
+      rank: index.toString(),
+      currentXp: `${Math.floor(currentXp / 10)}`,
+      requiredXp: `${Math.floor(requiredXp / 10)}`,
+      showXp: true,
+    });
+
+
+    // const card = new RankCard()
+    //   .setName(`${user.displayName}`)
+    //   .setLevel(`Level ${level}`)
+    //   .setColor("auto")
+    //   .setBrightness(69)
+    //   .setAvatar(user.avatarURL()!)
+    //   .setProgress(progress)
+    //   .setRank(index.toString())
+    //   .setCurrentXp(`${Math.floor(currentXp / 10)}`)
+    //   .setRequiredXp(`${Math.floor(requiredXp / 10)}`)
+    //   .setShowXp(true);
 
     const embed = new EmbedBuilder().setImage("attachment://awesome.png");
 
-    const attachment23 = new AttachmentBuilder(await card.build(), {
+    const attachment23 = new AttachmentBuilder(card, {
       description: "This is awesome",
       name: "awesome.png",
     });
