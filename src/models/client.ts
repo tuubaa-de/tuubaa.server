@@ -3,6 +3,7 @@ import {configDotenv} from "dotenv";
 import {MoonlinkManager} from "moonlink.js";
 
 export class ClientWrapper extends Client {
+
 	player: MoonlinkManager = new MoonlinkManager(
 		[
 			{

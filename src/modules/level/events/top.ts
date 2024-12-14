@@ -1,3 +1,4 @@
+
 import {ActionRowBuilder, ButtonBuilder, ButtonStyle, Events,} from "discord.js";
 import {client} from "../../../bot";
 import {topBuilder} from "..";
@@ -48,4 +49,5 @@ export async function topInteration() {
 	//   files: [topData.attachment],
 	//   components: [topData.actionRow],
 	// });
+
 }

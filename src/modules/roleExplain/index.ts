@@ -18,6 +18,7 @@ export const roleExplain = new Module({
 });
 
 export async function buildRoleEmbed() {
+
 	const purple = ":purple:";
 	const blue = ":blue:";
 	const yellow = ":yellow:";
@@ -101,6 +102,7 @@ export async function buildRoleEmbed() {
 	const unschuldigMembers = getMember(unschuldig);
 
 	const team = `
+
   ${purple}${fahrer}
   > ${fahrerText}
   ${fahrerMembers}
@@ -108,10 +110,6 @@ export async function buildRoleEmbed() {
   ${blue}${dev}
   > ${devText}
   ${devMembers}
-
-  ${yellow}${manager}
-  > ${managerText}
-  ${managerMembers}
 
   ${green}${mod}
   > ${modText}

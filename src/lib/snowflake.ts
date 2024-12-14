@@ -5,6 +5,7 @@ import {publicProcedure, router} from "../endpoint";
 import {z} from "zod";
 
 const Roles = z.object({
+
 	user: z.custom<Role>().nullable(),
 	ban: z.custom<Role>().nullable(),
 	mute: z.custom<Role>().nullable(),
@@ -34,6 +35,7 @@ const Roles = z.object({
 	specialSplitter: z.custom<Role>().nullable(),
 	personalySplitter: z.custom<Role>().nullable(),
 	pingsSplitter: z.custom<Role>().nullable(),
+
 });
 
 const Channels = z.object({
@@ -72,9 +74,11 @@ class Snowflake {
 		await Database.config.set(name, id);
 		const role = this.guild.roles.cache.get(id);
 
-		if (!role) {
-			throw new Error(`Role not found with the id ${id}`);
-		}
+
+    if (!role) {
+      throw new Error(`Role not found with the id ${name} ${id}`);
+    }
+
 
 		this.roles[name] = role;
 	}
@@ -98,6 +102,7 @@ class Snowflake {
 		if (!channel) {
 			throw new Error(`Channel not found with the id ${id}`);
 		}
+
 
 		this.channels[name] = channel as TextChannel;
 	}

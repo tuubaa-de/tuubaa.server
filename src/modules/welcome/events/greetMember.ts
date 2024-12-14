@@ -4,6 +4,7 @@ import {snowflake} from "../../../lib/snowflake";
 import {prisma} from "../../../lib/database";
 
 export async function greetMember() {
+
 	const members = await snowflake.guild.members.fetch();
 
 	let count = 0;
@@ -97,4 +98,5 @@ export async function greetMember() {
 			await member.roles.add(roleData.roleId);
 		}
 	});
+
 }

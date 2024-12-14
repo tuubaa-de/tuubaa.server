@@ -41,7 +41,7 @@
     "moonlink.js": "^3.6.8",
     "musicard": "^2.0.5",
     "node-vibrant": "^3.2.1-alpha.1",
-    "rankcard": "^1.0.8-test",
+    "rankcard": "^1.2.8",
     "rc-color": "^1.0.0",
     "youtube-ext": "^1.1.25",
     "zod": "^3.22.4"

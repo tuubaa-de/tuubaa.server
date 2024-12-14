@@ -8,6 +8,7 @@ import {SlashCommandPermissionsBuilder} from "../../../models/slashCommandBuilde
 import {snowflake} from "../../../lib/snowflake";
 
 export const myLevel = {
+
 	data: new SlashCommandPermissionsBuilder()
 		.setName("level")
 		.setDescription("Zeigt dein Level an.")
@@ -154,4 +155,5 @@ export const myLevel = {
 
 		await interaction.channel?.send({files: [attachment]});
 	},
+
 };

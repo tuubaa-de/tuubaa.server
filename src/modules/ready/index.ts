@@ -7,6 +7,7 @@ import {Module} from "../../types/module";
 export const readyRouter = router({});
 
 async function entry() {
+
 	console.log(`Client loaded with ${client.user?.tag}`);
 	snowflake.updateMember("time", "795306274467348510");
 	snowflake.updateMember("tuubaa", "624623721587408896");
@@ -79,6 +80,7 @@ async function entry() {
 		// info(">> Checking for new Members");
 		updateMemberCount(channel, memberCount);
 	}, 6 * 60 * 1000);
+
 }
 
 export const ready = new Module({

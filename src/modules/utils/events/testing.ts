@@ -5,6 +5,7 @@ import {readFileSync} from "fs";
 import {prisma} from "../../../lib/database";
 
 export async function testing() {
+
 	client.on(Events.MessageCreate, async (message) => {
 		// returnbug
 		if (
@@ -54,4 +55,5 @@ export async function testing() {
 		//   }
 		// }
 	});
+
 }
