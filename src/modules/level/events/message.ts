@@ -27,6 +27,9 @@ export async function initMessageXPEvaluator() {
 		// Commit this timestamp to the user
 		user_timestamps[message.author.id].pushFront(now);
 
+		// 10s Cooldown since last message?
+		if (now.getTime() - user_timestamps[message.author.id].peekBack()!.getTime() < 10000) return;
+
 		// Clear old timestamps for the server (old = out of window)
 		while (
 			server_timestamps.peekBack() && server_timestamps.peekBack()!.getTime() < now.getTime() - anHour
