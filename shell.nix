@@ -9,6 +9,7 @@ pkgs.mkShell {
       python3
       prisma-engines
       openssl
+      nodePackages_latest.ts-node
     ];
 
     shellHook = ''
