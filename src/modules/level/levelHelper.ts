@@ -2,7 +2,7 @@ import {Message} from "discord.js";
 
 export const levellingConfig = {
 	LEVELLING_FUNCTION_FACTOR: 200,
-	MAX_LEVEL: 100,
+	MAX_LEVEL: 200,
 
 	VOICE_PER_MINUTE_BASE_EXP: 15,
 	VOICE_UNMUTE_MULTIPLIER: 1,

@@ -152,13 +152,6 @@ const rolePlayData = {
     text2: "user1 lacht! <:CursedLaughTuba:1085515265170743306>",
     description: "Lachen!",
   },
-  kiss: {
-    title: "Kuss für user2! <:LoveTuba:1090372406897561791>",
-    title2: "Kuss! <:LoveTuba:1090372406897561791>",
-    text: `user2, user1 gibt dir einen Kuss! <:LoveTuba:1090372406897561791>`,
-    text2: "user1 küsst sich selbst... 😔",
-    description: "Kuss!",
-  },
   love: {
     title: "user1 liebt user2! <:LoveTuba:1090372406897561791>",
     title2: "user1 liebt alle! <:LoveTuba:1090372406897561791>️",
