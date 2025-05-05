@@ -51,8 +51,6 @@ export function welcomeMessage() {
 
         Danach kannst den Server-Guide durchgehen um dich mit Server vertraut zu machen. 📚
 
-        Wir haben auch einen Minecraft-Server, auf dem du mit anderen Mitgliedern spielen kannst 🎮! Für mehr Informationen, schau dir bitte die Nachrichten in ${snowflake.channels.minecraft} an 🌍.
-
         Wir freuen uns, dich in unserer Community begrüßen zu dürfen! 🥳
 
         Falls du Fragen hast, kannst du dich jederzeit an unser Team wenden. Erstelle einfach ein Ticket in ${snowflake.channels.support} und wir helfen dir so schnell wie möglich 🎫!

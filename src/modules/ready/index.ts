@@ -51,9 +51,9 @@ async function entry() {
     client.user.setPresence({
       activities: [
         {
-          name: "tuubaa",
+          name: "tuubaa :D",
           type: ActivityType.Watching,
-          url: "http://tuubaa.de/",
+          url: "https://www.twitch.tv/1tuubaa",
         },
       ],
       status: "online",

@@ -125,7 +125,7 @@ export const moduleManager = new ModuleManager({
     },
     {
       module: utils,
-      enabled: true,
+      enabled: false,
     },
     {
       module: level,
@@ -133,39 +133,39 @@ export const moduleManager = new ModuleManager({
     },
     {
       module: voice,
-      enabled: true,
+      enabled: false,
     },
     {
       module: rules,
-      enabled: true,
+      enabled: false,
     },
     {
       module: roleplay,
-      enabled: true,
+      enabled: false,
     },
     {
       module: music,
-      enabled: true,
+      enabled: false,
     },
     {
       module: welcome,
-      enabled: true,
+      enabled: false,
     },
     {
       module: ticket,
-      enabled: true,
+      enabled: false,
     },
     {
       module: logs,
-      enabled: true,
+      enabled: false,
     },
     {
       module: roleExplain,
-      enabled: true,
+      enabled: false,
     },
     {
       module: moderation,
-      enabled: true,
+      enabled: false,
     },
   ],
 });
