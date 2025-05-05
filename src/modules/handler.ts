@@ -69,6 +69,9 @@ class ModuleManager {
     const commands = new Map<string, Commands>();
 
     this.modules.forEach((module) => {
+      if (!module.enabled) {
+        return;
+      }
       module.module.commands.forEach((command) => {
         commands.set(command.data.name, command);
       });
@@ -111,7 +114,7 @@ class ModuleManager {
     Promise.all(
       this.modules
         .filter((module) => module.enabled)
-        .map(async (module) => module.module.entry())
+        .map(async (module) => module.module.entry()),
     );
   }
 }
